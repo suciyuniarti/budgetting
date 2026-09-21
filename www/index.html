@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="color-scheme" content="light">
     <title>Budgeting Event</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Local Libraries -->
     <script src="lib/xlsx.full.min.js"></script>
     <script src="lib/jspdf.umd.min.js"></script>
     <script src="lib/jspdf.plugin.autotable.min.js"></script>
-    
+
     <style>
         * {
             margin: 0;
@@ -62,20 +62,16 @@
         }
 
         .header h1 {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: 'Poppins', Georgia, sans-serif;
             font-size: 1.5rem;
             font-weight: 600;
-            letter-spacing: normal;
-            text-transform: none;
-            color: var(--ink);
         }
 
         .header-subtitle {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: 'Poppins', Georgia, sans-serif;
             font-size: 0.9rem;
             color: var(--ink-soft);
             margin-top: 4px;
-            font-style: italic;
             font-weight: 400;
         }
 
@@ -87,8 +83,8 @@
         }
 
         /* Typography */
-        h1, h2, h3, .card-title, .project-name, .item-name {
-            font-family: 'Fraunces', Georgia, serif;
+        h1, h2, h3, .card-title, .project-name {
+            font-family: 'Poppins', Georgia, sans-serif;
             font-weight: 500;
         }
 
@@ -143,10 +139,6 @@
             background: transparent;
             color: var(--negative);
             border: 1.5px solid var(--negative);
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            min-height: 36px;
-            font-weight: 500;
         }
 
         .btn-danger:active {
@@ -156,108 +148,186 @@
         .btn-small {
             padding: 8px 14px;
             font-size: 0.85rem;
-            min-height: 36px;
+            min-height: 40px;
         }
 
-        .btn-icon {
-            width: 36px;
-            height: 36px;
-            padding: 0;
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--line);
+        /* Highlight box */
+        .highlight-box {
             border-radius: 10px;
             padding: 16px;
-            margin-bottom: 16px;
+            margin-top: 16px;
+            border: 1.5px solid;
         }
 
-        .card-header {
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-        }
-
-        .card-title {
-            font-size: 1.15rem;
-            color: var(--ink);
-        }
-
-        /* Project List */
-        .project-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .project-card {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 16px;
-            cursor: pointer;
-            transition: transform 0.15s;
-        }
-
-        .project-card:active {
-            transform: scale(0.98);
-        }
-
-        .project-name {
-            font-size: 1.05rem;
-            color: var(--ink);
-            margin-bottom: 4px;
-        }
-
-        .project-date {
-            font-size: 0.85rem;
-            color: var(--ink-soft);
-            margin-bottom: 12px;
-        }
-
-        .project-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px dashed var(--line);
-            gap: 8px;
-        }
-
-        .project-stat {
-            flex: 1;
-            text-align: center;
-        }
-
-        .project-stat-label {
-            color: var(--ink-soft);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .project-stat-value {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 600;
-            color: var(--ink);
-            font-size: 0.9rem;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .balance-positive {
+        .highlight-positive {
+            background: rgba(127, 163, 130, 0.1);
+            border-color: var(--positive);
             color: var(--positive);
         }
 
-        .balance-negative {
+        .highlight-negative {
+            background: rgba(201, 123, 123, 0.1);
+            border-color: var(--negative);
             color: var(--negative);
+        }
+
+        .highlight-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        .highlight-value {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        /* Budgeting header */
+        .budgeting-title {
+            font-family: 'Poppins', Georgia, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink);
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .budgeting-subtitle {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* Section title */
+        .section-title {
+            font-family: 'Poppins', Georgia, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin: 20px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* Item table */
+        .item-head,
+        .item-row {
+            display: grid;
+            grid-template-columns: 26px minmax(0, 2fr) minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.35fr);
+            gap: 6px;
+            align-items: center;
+        }
+
+        .item-head {
+            padding: 0 12px 8px;
+        }
+
+        .item-row-header {
+            font-size: 0.68rem;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .item-row {
+            padding: 8px 10px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .item-no {
+            font-size: 0.78rem;
+            color: var(--ink-soft);
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .item-input {
+            width: 100%;
+            min-width: 0;
+            padding: 8px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .item-input:hover {
+            border-color: var(--line);
+        }
+
+        .item-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--surface);
+        }
+
+        .item-input-price,
+        .item-input-pax {
+            text-align: right;
+            -moz-appearance: textfield;
+        }
+
+        .item-input-price::-webkit-outer-spin-button,
+        .item-input-price::-webkit-inner-spin-button,
+        .item-input-pax::-webkit-outer-spin-button,
+        .item-input-pax::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .item-total-cell {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .total-row {
+            background: var(--surface-2);
+            border-color: var(--accent);
+        }
+
+        .total-row-label {
+            grid-column: 1 / span 4;
+            text-align: right;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .total-row-value {
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        /* Manual section */
+        .manual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .manual-field {
+            margin-bottom: 0;
+        }
+
+        .input-readonly {
+            background: var(--surface);
+            color: var(--ink);
         }
 
         /* Forms */
@@ -298,7 +368,6 @@
             opacity: 0.6;
         }
 
-        /* Consistent input styling across all types */
         input[type="text"],
         input[type="number"],
         input[type="date"],
@@ -310,7 +379,6 @@
             appearance: none;
         }
 
-        /* Date input specific styling */
         input[type="date"] {
             position: relative;
             color: var(--ink);
@@ -322,125 +390,289 @@
             font-size: 0.95rem;
         }
 
-        input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-            color: var(--ink);
-        }
-
         input[type="date"]::-webkit-calendar-picker-indicator {
             opacity: 0.6;
             cursor: pointer;
-            filter: sepia(0.5) saturate(0.8) hue-rotate(10deg);
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
+        .field-hint {
+            font-size: 0.72rem;
+            color: var(--ink-soft);
+            margin-top: 6px;
         }
 
-        /* Number input specific styling */
-        input[type="number"] {
-            -moz-appearance: textfield;
+        /* Berangkat & Pulang */
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            opacity: 1;
+        .date-range .form-group {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 0;
         }
 
-        .form-row {
+        .date-range-sep {
+            font-weight: 600;
+            color: var(--ink-soft);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* Tanggal Event picker */
+        .date-picker-trigger {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .date-picker-trigger .form-input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .date-picker-trigger .btn {
+            flex-shrink: 0;
+        }
+
+        .calendar-panel {
+            margin-top: 10px;
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .calendar-month {
+            font-family: 'Poppins', Georgia, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .calendar-nav {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            border-radius: 8px;
+            color: var(--ink);
+            font-size: 1.1rem;
+            line-height: 1;
+            cursor: pointer;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .calendar-weekdays,
+        .calendar-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
         }
 
-        /* Items List */
-        .item-list {
+        .calendar-weekdays div {
+            text-align: center;
+            font-size: 0.68rem;
+            color: var(--ink-soft);
+            padding: 4px 0;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.82rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .calendar-day.empty {
+            cursor: default;
+        }
+
+        .calendar-day.in-range {
+            background: rgba(217, 164, 65, 0.18);
+        }
+
+        .calendar-day.selected {
+            background: var(--accent);
+            color: var(--accent-ink);
+            font-weight: 700;
+        }
+
+        .calendar-day.today {
+            border-color: var(--accent);
+        }
+
+        .calendar-hint {
+            font-size: 0.72rem;
+            color: var(--ink-soft);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .calendar-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .calendar-footer .btn {
+            flex: 1;
+        }
+
+        /* Tag input */
+        .tag-input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 12px;
+            border: 1.5px solid var(--line);
+            border-radius: 8px;
+            background: var(--bg);
+            min-height: 48px;
+        }
+
+        .tag-input-wrapper:focus-within {
+            border-color: var(--accent);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--surface-2);
+            color: var(--ink);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            color: var(--ink-soft);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 2px;
+            line-height: 1;
+        }
+
+        .tag-remove:hover {
+            color: var(--negative);
+        }
+
+        .tag-input-field {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--ink);
+            min-width: 120px;
+            padding: 4px;
+        }
+
+        /* Project list */
+        .project-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .item-card {
-            background: var(--bg);
+        .project-card {
+            background: var(--surface);
             border: 1px solid var(--line);
             border-radius: 10px;
             padding: 16px;
+            cursor: pointer;
+            transition: transform 0.15s;
         }
 
-        .item-header {
+        .project-card:active {
+            transform: scale(0.98);
+        }
+
+        .project-card-head {
             display: flex;
-            justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
-            gap: 12px;
+            justify-content: space-between;
+            gap: 8px;
         }
 
-        .item-name {
-            font-size: 1rem;
+        .project-name {
+            font-size: 1.05rem;
             color: var(--ink);
-            flex: 1;
+            margin-bottom: 4px;
             word-break: break-word;
         }
 
-        .item-actions {
-            display: flex;
-            gap: 6px;
-            flex-shrink: 0;
-        }
-
-        .item-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .item-total {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--line);
-            text-align: right;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 600;
-            color: var(--ink);
+        .project-delete {
+            background: none;
+            border: none;
+            color: var(--ink-soft);
             font-size: 1rem;
-            font-variant-numeric: tabular-nums;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            line-height: 1;
         }
 
-        /* Summary */
-        .summary-box {
-            background: var(--surface-2);
-            color: var(--ink);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 24px;
-            border: 1px solid var(--line);
+        .project-delete:active {
+            background: var(--line);
         }
 
-        .summary-row {
+        .project-date,
+        .project-dest {
+            font-size: 0.82rem;
+            color: var(--ink-soft);
+            word-break: break-word;
+        }
+
+        .project-dest {
+            margin-bottom: 12px;
+        }
+
+        .project-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--line);
+            padding-top: 12px;
+            border-top: 1px dashed var(--line);
+            gap: 8px;
         }
 
-        .summary-row:last-child {
-            border-bottom: none;
-            padding-top: 14px;
-            margin-top: 6px;
-            border-top: 1px dashed var(--accent);
+        .project-stat {
+            flex: 1;
+            text-align: center;
         }
 
-        .summary-label {
-            font-size: 0.9rem;
+        .project-stat-label {
             color: var(--ink-soft);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .summary-value {
+        .project-stat-value {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
-            font-size: 1rem;
-            font-variant-numeric: tabular-nums;
             color: var(--ink);
+            font-size: 0.9rem;
+            font-variant-numeric: tabular-nums;
+            word-break: break-word;
         }
 
         .balance-positive {
@@ -449,6 +681,83 @@
 
         .balance-negative {
             color: var(--negative);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            color: var(--ink);
+        }
+
+        /* Delete list modal */
+        .modal-note {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--ink-soft);
+        }
+
+        .delete-list {
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .delete-item-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1.5px solid var(--line);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            background: var(--bg);
+        }
+
+        .delete-item-option:hover {
+            border-color: var(--accent);
+            background: var(--surface);
+        }
+
+        .delete-item-option.selected {
+            border-color: var(--accent);
+            background: var(--surface-2);
+        }
+
+        .delete-item-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .delete-item-option .item-name-text {
+            flex: 1;
+            font-size: 0.88rem;
+            color: var(--ink);
+            word-break: break-word;
+        }
+
+        .delete-item-option .item-price-text {
+            font-size: 0.78rem;
+            color: var(--ink-soft);
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
         }
 
         /* Empty State */
@@ -465,11 +774,15 @@
         }
 
         .empty-state-title {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: 'Poppins', Georgia, sans-serif;
             font-size: 1.1rem;
             font-weight: 500;
             margin-bottom: 8px;
             color: var(--ink);
+        }
+
+        .empty-state p {
+            font-size: 0.88rem;
         }
 
         /* Modal */
@@ -513,7 +826,7 @@
         }
 
         .modal-title {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: 'Poppins', Georgia, sans-serif;
             font-size: 1.1rem;
             font-weight: 500;
         }
@@ -565,18 +878,6 @@
             display: none !important;
         }
 
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-16 {
-            margin-top: 16px;
-        }
-
-        .mb-16 {
-            margin-bottom: 16px;
-        }
-
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -603,20 +904,38 @@
                 padding: 12px;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
+            .item-head,
+            .item-row {
+                grid-template-columns: 20px minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.2fr);
+                gap: 4px;
             }
 
-            .item-details {
+            .item-row {
+                padding: 8px;
+            }
+
+            .item-input {
+                padding: 6px 4px;
+                font-size: 0.75rem;
+            }
+
+            .item-total-cell,
+            .total-row-value {
+                font-size: 0.75rem;
+            }
+
+            .manual-grid {
                 grid-template-columns: 1fr;
             }
 
             .action-bar {
-                flex-direction: column;
+                gap: 8px;
             }
 
             .action-bar .btn {
-                width: 100%;
+                min-width: 0;
+                padding: 12px 8px;
+                font-size: 0.85rem;
             }
 
             .project-stats {
@@ -639,659 +958,1756 @@
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <div class="header">
         <h1>Budgeting Event</h1>
         <div class="header-subtitle">Buku Kas Perjalanan</div>
     </div>
 
-    <!-- Main Container -->
     <div class="container">
-        <!-- Project List View -->
-        <div id="projectListView">
+
+        <!-- ================================================
+             LANGKAH 0 - DAFTAR PROJECT
+        ================================================= -->
+        <div id="listView">
+
             <div class="action-bar">
-                <button class="btn btn-primary" onclick="showNewProjectModal()">
-                    <span>+</span> Buat Project Baru
-                </button>
+                <button class="btn btn-primary" onclick="startNewProject()">+ Buat Project Baru</button>
             </div>
+
             <div id="projectList" class="project-list"></div>
+
             <div id="emptyState" class="empty-state hidden">
                 <div class="empty-state-icon">📋</div>
                 <div class="empty-state-title">Belum ada project</div>
-                <p>Klik tombol di atas untuk membuat project budgeting pertama Anda</p>
+                <p>Klik "Buat Project Baru" untuk mulai menyusun budgeting perjalanan.</p>
             </div>
+
         </div>
 
-        <!-- Project Detail View -->
-        <div id="projectDetailView" class="hidden">
-            <div class="action-bar">
-                <button class="btn btn-secondary" onclick="showProjectList()">
-                    ← Kembali
-                </button>
-            </div>
+        <!-- ================================================
+             LANGKAH 1 - FORM NEW PROJECT
+        ================================================= -->
+        <div id="formModal" class="modal-overlay">
+            <div class="modal">
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Informasi Event</div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Nama Event</label>
-                    <input type="text" class="form-input" id="projectName" placeholder="Contoh: Wisata Bandung 2024" onchange="updateProjectInfo()">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Tanggal Event (Opsional)</label>
-                        <input type="date" class="form-input" id="projectDate" onchange="updateProjectInfo()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Jumlah Pax</label>
-                        <input type="number" class="form-input" id="projectPax" placeholder="0" min="0" onchange="updateProjectInfo()">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Harga Per Pax (Rp)</label>
-                    <input type="number" class="form-input" id="projectPricePerPax" placeholder="0" min="0" onchange="updateProjectInfo()">
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Daftar Pengeluaran</div>
-                </div>
-                <div id="itemsList" class="item-list"></div>
-                <div id="emptyItemsState" class="empty-state hidden">
-                    <div class="empty-state-icon">💰</div>
-                    <div class="empty-state-title">Belum ada pengeluaran</div>
-                    <p>Klik tombol di bawah untuk menambah item pengeluaran</p>
-                </div>
-                <button class="btn btn-primary mt-16" onclick="showAddItemModal()" style="width: 100%;">
-                    + Tambah Item Pengeluaran
-                </button>
-            </div>
-
-            <div class="summary-box">
-                <div class="summary-row">
-                    <div class="summary-label">Total Harga Perpax</div>
-                    <div class="summary-value mono" id="summaryTotalPerpax">Rp 0</div>
-                </div>
-                <div class="summary-row">
-                    <div class="summary-label">Total Pengeluaran</div>
-                    <div class="summary-value mono" id="summaryTotalExpenses">Rp 0</div>
-                </div>
-                <div class="summary-row">
-                    <div class="summary-label">Balance Due</div>
-                    <div class="summary-value mono" id="summaryBalance">Rp 0</div>
-                </div>
-            </div>
-
-            <div class="action-bar mt-16">
-                <button class="btn btn-secondary" onclick="exportToExcel()">
-                    📊 Export Excel
-                </button>
-                <button class="btn btn-secondary" onclick="exportToPDF()">
-                    📄 Export PDF
-                </button>
-            </div>
-
-            <div class="text-center mt-16">
-                <button class="btn btn-danger" onclick="deleteCurrentProject()">
-                    🗑 Hapus Project
-                </button>
-            </div>
+        <div class="modal-header">
+            <div class="modal-title" id="formCardTitle">Project Baru</div>
+            <button class="modal-close" onclick="cancelNewProject()">&times;</button>
         </div>
-    </div>
 
-    <!-- New/Edit Project Modal -->
-    <div id="projectModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title" id="projectModalTitle">Project Baru</div>
-                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
-            </div>
-            <div class="modal-body">
+        <div class="modal-body">
+
+                <!-- 1. Nama Event -->
                 <div class="form-group">
-                    <label class="form-label">Nama Event *</label>
-                    <input type="text" class="form-input" id="modalProjectName" placeholder="Contoh: Wisata Bandung 2024">
+                    <label class="form-label" for="newProjectName">Nama Event</label>
+                    <input type="text" class="form-input" id="newProjectName" placeholder="Contoh: SMAN 77 Jakarta">
                 </div>
+
+                <!-- 2. Tanggal Event (bisa lebih dari satu hari) -->
                 <div class="form-group">
-                    <label class="form-label">Tanggal Event (Opsional)</label>
-                    <input type="date" class="form-input" id="modalProjectDate">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Jumlah Pax *</label>
-                        <input type="number" class="form-input" id="modalProjectPax" placeholder="0" min="0">
+                    <label class="form-label" for="newProjectDateRange">Tanggal Event</label>
+                    <div class="date-picker-trigger">
+                        <input type="text" class="form-input" id="newProjectDateRange" placeholder="Bisa milih jumlah hari" readonly onclick="openCalendar()">
+                        <button type="button" class="btn btn-secondary btn-small" onclick="toggleCalendar()">📅 Pilih</button>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Harga Per Pax (Rp) *</label>
-                        <input type="number" class="form-input" id="modalProjectPrice" placeholder="0" min="0">
+
+                    <div id="calendarPanel" class="calendar-panel hidden">
+                        <div class="calendar-header">
+                            <button type="button" class="calendar-nav" onclick="changeCalendarMonth(-1)">‹</button>
+                            <div class="calendar-month" id="calendarMonthLabel"></div>
+                            <button type="button" class="calendar-nav" onclick="changeCalendarMonth(1)">›</button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Min</div>
+                            <div>Sen</div>
+                            <div>Sel</div>
+                            <div>Rab</div>
+                            <div>Kam</div>
+                            <div>Jum</div>
+                            <div>Sab</div>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                        <div class="calendar-hint" id="calendarHint">Ketuk tanggal mulai, lalu ketuk tanggal akhir.</div>
+                        <div class="calendar-footer">
+                            <button type="button" class="btn btn-secondary btn-small" onclick="resetEventDates()">Reset</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="closeCalendar()">Selesai</button>
+                        </div>
+                    </div>
+                    <div class="field-hint">Bisa lebih dari satu hari &middot; ketuk tanggal mulai, lalu tanggal akhir.</div>
+                </div>
+
+                <!-- 3. Tujuan (bisa lebih dari satu) -->
+                <div class="form-group">
+                    <label class="form-label" for="newProjectDestInput">Tujuan</label>
+                    <div id="destinationWrapper" class="tag-input-wrapper">
+                        <input type="text" class="tag-input-field" id="newProjectDestInput"
+                            placeholder="Contoh: Pangandaran, Citumang, Batu Karas"
+                            onkeydown="onDestinationKeydown(event)"
+                            onblur="commitDestinationInput()">
+                    </div>
+                    <div class="field-hint">Bisa lebih dari satu tujuan &middot; tekan koma untuk menambahkan.</div>
+                </div>
+
+                <!-- 4. Berangkat dan Pulang -->
+                <div class="form-group">
+                    <label class="form-label">Berangkat dan Pulang</label>
+                    <div class="date-range">
+                        <div class="form-group">
+                            <label class="form-label" for="newProjectStart">Berangkat</label>
+                            <input type="date" class="form-input" id="newProjectStart" oninput="markBerangkatManual()">
+                        </div>
+                        <span class="date-range-sep">s/d</span>
+                        <div class="form-group">
+                            <label class="form-label" for="newProjectEnd">Pulang</label>
+                            <input type="date" class="form-input" id="newProjectEnd" oninput="markBerangkatManual()">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('projectModal')">Batal</button>
-                <button class="btn btn-primary" onclick="saveProject()">Simpan</button>
+
+                <!-- 5. Jumlah Pax -->
+                <div class="form-group">
+                    <label class="form-label" for="newProjectPax">Jumlah Pax</label>
+                    <input type="number" class="form-input" id="newProjectPax" placeholder="0" min="1" inputmode="numeric">
+                </div>
+             </div>
+             
+             <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cancelNewProject()">Batal</button>
+                <button class="btn btn-primary" id="formNextBtn" onclick="goToBudgeting()">Next</button>
             </div>
         </div>
     </div>
 
-    <!-- Add/Edit Item Modal -->
-    <div id="itemModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title" id="itemModalTitle">Tambah Item</div>
-                <button class="modal-close" onclick="closeModal('itemModal')">&times;</button>
+        <!-- ================================================
+             LANGKAH 2 - LAYAR BUDGETING
+        ================================================= -->
+        <div id="budgetingView" class="hidden">
+
+            <div class="budgeting-title">BUDGETING</div>
+            <div class="budgeting-subtitle" id="budgetingSubtitle"></div>
+
+            <div style="text-align:center; margin-bottom:12px;">
+                <button type="button" class="btn btn-secondary btn-small" onclick="editProjectInfo()">✎ Ubah Info Event</button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Nama Item *</label>
-                    <input type="text" class="form-input" id="modalItemName" placeholder="Contoh: Bus Prabu">
+
+            <div class="item-head">
+                <div></div>
+                <div class="item-row-header">Nama Item</div>
+                <div class="item-row-header" style="text-align:right;">Harga</div>
+                <div class="item-row-header" style="text-align:right;">Pax</div>
+                <div class="item-row-header" style="text-align:right;">Total</div>
+            </div>
+
+            <div id="emptyItemsState" class="empty-state hidden">
+                <div class="empty-state-icon">💰</div>
+                <div class="empty-state-title">Belum ada item</div>
+                <p>Klik "+ Tambah Item" untuk menambah baris pengeluaran baru.</p>
+            </div>
+
+            <div id="itemsList"></div>
+
+            <div class="action-bar" style="margin-top:12px;">
+                <button class="btn btn-secondary" onclick="addItem()">+ Tambah Item</button>
+                <button class="btn btn-secondary" onclick="showDeleteItemsModal()">Hapus Item</button>
+            </div>
+
+            <div class="section-title">Pengaturan Harga</div>
+
+            <div class="manual-grid">
+                <div class="form-group manual-field">
+                    <label class="form-label" for="pricePerPaxInput">Harga Per Pax</label>
+                    <input type="number" class="form-input" id="pricePerPaxInput" placeholder="0" min="0" inputmode="numeric" oninput="updatePricePerPax(this.value)">
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Harga (Rp) *</label>
-                        <input type="number" class="form-input" id="modalItemPrice" placeholder="0" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Qty *</label>
-                        <input type="number" class="form-input" id="modalItemQty" placeholder="0" min="0">
-                    </div>
+                <div class="form-group manual-field">
+                    <label class="form-label">Profit Per Pax</label>
+                    <input type="text" class="form-input input-readonly" id="profitPerPaxInput" readonly tabindex="-1">
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('itemModal')">Batal</button>
-                <button class="btn btn-primary" onclick="saveItem()">Simpan</button>
+
+            <div class="highlight-box highlight-positive" id="balanceBox">
+                <div class="highlight-label" id="balanceLabel">Profit</div>
+                <div class="highlight-value mono" id="balanceValue">Rp 0</div>
             </div>
+
+            <div class="action-bar" style="margin-top:20px;">
+                <button class="btn btn-secondary" onclick="exportToExcel()">📊 Export Excel</button>
+                <button class="btn btn-secondary" onclick="exportToPDF()">📄 Export PDF</button>
+            </div>
+
+            <div class="action-bar" style="margin-top:0;">
+                <button class="btn btn-secondary" onclick="cancelBudgeting()">Batal</button>
+                <button class="btn btn-primary" onclick="saveBudgeting()">Simpan</button>
+            </div>
+
         </div>
+
+    </div>
+
+    <!-- MODAL HAPUS ITEM (pilih satu atau beberapa item) -->
+    <div id="deleteItemsModal" class="modal-overlay">
+
+        <div class="modal">
+
+            <div class="modal-header">
+                <div class="modal-title">Hapus Item</div>
+                <button class="modal-close" onclick="closeModal('deleteItemsModal')">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-note">Pilih satu atau beberapa item yang ingin di hapus:</p>
+                <div id="deleteListContainer" class="delete-list"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('deleteItemsModal')">Batal</button>
+                <button class="btn btn-danger" onclick="confirmDeleteItems()">Hapus Terpilih</button>
+            </div>
+
+        </div>
+
     </div>
 
     <script>
-        // Data Management
+
+        /* =========================================================
+           TEMPLATE ITEM DEFAULT
+           Setiap project baru otomatis diisi daftar item di bawah
+           ini (harga & pax mulai dari 0). User tetap bisa
+           mengubah, menghapus, atau menambah item.
+        ========================================================= */
+
+        const DEFAULT_ITEM_NAMES = [
+            'Bis Prabu Jaya',
+            'Hotel Peserta',
+            'Hotel Crew',
+            'Extra Bed',
+            'Makan Hari ke 1',
+            'Makan Hari ke 2',
+            'Makan Hari ke 3',
+            'Air Mineral',
+            'Wisata 1',
+            'Wisata 2',
+            'Tiket [lokasi]',
+            'Fun Games',
+            'MC & Singer Electone',
+            'Hadiah Doorprize',
+            'Tour Leader',
+            'Helper',
+            'Dokumentasi',
+            'Driver',
+            'Co Driver',
+            'Tol',
+            'Parkir',
+            'Spanduk',
+            'Luggage Tag',
+            'Obat-obatan',
+            'Operasional Crew',
+            'Fee Panitia',
+            'Fee LP2K',
+            'Stiker & Spanduk Bis'
+        ];
+
+        const STORAGE_KEY = 'budgetingProjects';
+
+        const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+        const MONTHS_FULL = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+        /* =========================================================
+           STATE
+        ========================================================= */
+
         let projects = [];
+
         let currentProjectId = null;
-        let editingItemId = null;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadProjects();
-            renderProjectList();
-        });
+        /* Draft = project yang sedang dikerjakan di layar Budgeting */
+        let draftProject = null;
 
-        // LocalStorage Operations
-        function loadProjects() {
-            const stored = localStorage.getItem('budgetingProjects');
-            if (stored) {
-                try {
-                    projects = JSON.parse(stored);
-                } catch (e) {
-                    projects = [];
+        /* true kalau draft berasal dari form project baru */
+        let draftIsNew = false;
+
+        /* true kalau draft berasal dari project yang sudah tersimpan */
+        let editingExisting = false;
+
+        /* true kalau field Berangkat & Pulang masih ikut rentang tanggal event */
+        let berangkatAutoFilled = true;
+
+        let destinationTags = [];
+
+        /* Tanggal event bisa berisi beberapa hari */
+        let selectedEventDates = [];
+
+        let rangeStart = null;
+        let rangeEnd = null;
+        let calendarCursor = new Date();
+
+        let itemsToDelete = new Set();
+
+        /* =========================================================
+           HELPER
+        ========================================================= */
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        }
+
+        function parseNumber(value) {
+            if (value === null || value === undefined) {
+                return 0;
+            }
+            const number = Number(String(value).replace(/[^0-9.\-]/g, ''));
+            return isNaN(number) ? 0 : number;
+        }
+
+        function formatRupiah(value) {
+            const number = Math.round(Number(value) || 0);
+            const sign = number < 0 ? '-' : '';
+            return sign + 'Rp ' + Math.abs(number).toLocaleString('id-ID');
+        }
+
+        function escapeHtml(text) {
+            return String(text === null || text === undefined ? '' : text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function pad2(value) {
+            return value < 10 ? '0' + value : String(value);
+        }
+
+        function toIsoDate(date) {
+            return date.getFullYear() + '-' + pad2(date.getMonth() + 1) + '-' + pad2(date.getDate());
+        }
+
+        function parseIsoDate(iso) {
+            if (typeof iso !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) {
+                return null;
+            }
+            const parts = iso.split('-');
+            const date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+            return isNaN(date.getTime()) ? null : date;
+        }
+
+        function formatDate(iso) {
+            const date = parseIsoDate(iso);
+            if (!date) {
+                return '';
+            }
+            return date.getDate() + ' ' + MONTHS_SHORT[date.getMonth()] + ' ' + date.getFullYear();
+        }
+
+        /* Label rentang tanggal event, contoh: "12 - 14 Sep 2026 (3 hari)" */
+        function formatDateRangeLabel(dates) {
+            const list = normalizeDateList(dates);
+
+            if (list.length === 0) {
+                return '';
+            }
+
+            const total = list.length;
+            const first = parseIsoDate(list[0]);
+            const last = parseIsoDate(list[total - 1]);
+
+            if (total === 1) {
+                return formatDate(list[0]) + ' (1 hari)';
+            }
+
+            if (first.getMonth() === last.getMonth() && first.getFullYear() === last.getFullYear()) {
+                return first.getDate() + ' - ' + last.getDate() + ' ' +
+                    MONTHS_SHORT[last.getMonth()] + ' ' + last.getFullYear() +
+                    ' (' + total + ' hari)';
+            }
+
+            return formatDate(list[0]) + ' - ' + formatDate(list[total - 1]) +
+                ' (' + total + ' hari)';
+        }
+
+        function normalizeDateList(dates) {
+            if (!Array.isArray(dates)) {
+                return [];
+            }
+
+            return dates
+                .filter(iso => parseIsoDate(iso) !== null)
+                .map(iso => toIsoDate(parseIsoDate(iso)))
+                .filter((iso, index, self) => self.indexOf(iso) === index)
+                .sort();
+        }
+
+        /* Semua tanggal dari start sampai end (inklusif) */
+        function buildDateRange(startIso, endIso) {
+            const start = parseIsoDate(startIso);
+            const end = parseIsoDate(endIso);
+
+            if (!start || !end) {
+                return [];
+            }
+
+            const list = [];
+            const cursor = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+
+            while (toIsoDate(cursor) <= toIsoDate(end)) {
+                list.push(toIsoDate(cursor));
+                cursor.setDate(cursor.getDate() + 1);
+            }
+
+            return list;
+        }
+
+        function showView(viewId) {
+            ['listView', 'budgetingView'].forEach(function (id) {
+                const element = document.getElementById(id);
+                if (!element) {
+                    return;
                 }
+                if (id === viewId) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        /* =========================================================
+           LOCAL STORAGE
+        ========================================================= */
+
+        function loadProjects() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+
+            if (!stored) {
+                projects = [];
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(stored);
+                projects = Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                projects = [];
             }
         }
 
         function saveProjects() {
-            localStorage.setItem('budgetingProjects', JSON.stringify(projects));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
         }
 
-        // Formatting
-        function formatRupiah(amount) {
-            if (isNaN(amount) || amount === null) return 'Rp 0';
-            return 'Rp ' + Number(amount).toLocaleString('id-ID');
+        /* =========================================================
+           MIGRASI DATA LAMA
+           Struktur lama: date (1 tanggal), item.price + item.qty,
+           dan item.prices[] (beberapa rincian harga per item).
+           Data lama dikonversi otomatis ke struktur baru (pax),
+           supaya project yang sudah tersimpan tidak hilang.
+        ========================================================= */
+
+        function migrateProjects() {
+            const usedIds = {};
+
+            projects = projects
+                .filter(function (project) {
+                    return project && typeof project === 'object';
+                })
+                .map(function (project) {
+                    if (!project.id || usedIds[project.id]) {
+                        project.id = generateId();
+                    }
+                    usedIds[project.id] = true;
+
+                    project.name = project.name ? String(project.name) : '';
+                    project.pax = parseNumber(project.pax);
+
+                    /* field lama: harga per pax disimpan di projectPricePerPax */
+                    if (project.pricePerPax === undefined && project.projectPricePerPax !== undefined) {
+                        project.pricePerPax = project.projectPricePerPax;
+                    }
+
+                    project.pricePerPax = parseNumber(project.pricePerPax);
+                    delete project.projectPricePerPax;
+
+                    project.destinations = Array.isArray(project.destinations)
+                        ? project.destinations
+                            .map(function (tag) { return String(tag).trim(); })
+                            .filter(function (tag) { return tag !== ''; })
+                        : [];
+
+                    project.eventDates = normalizeDateList(project.eventDates);
+
+                    if (project.eventDates.length === 0 && project.date) {
+                        project.eventDates = normalizeDateList([project.date]);
+                    }
+                    delete project.date;
+
+                    if (parseIsoDate(project.startDate) === null) {
+                        project.startDate = project.eventDates.length ? project.eventDates[0] : '';
+                    }
+
+                    if (parseIsoDate(project.endDate) === null) {
+                        project.endDate = project.eventDates.length
+                            ? project.eventDates[project.eventDates.length - 1]
+                            : '';
+                    }
+
+                    project.items = migrateItems(project.items);
+
+                    return project;
+                });
         }
 
-        function formatDate(dateStr) {
-            if (!dateStr) return '';
-            const date = new Date(dateStr);
-            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        function migrateItems(items) {
+            if (!Array.isArray(items)) {
+                return [];
+            }
+
+            const usedIds = {};
+            const result = [];
+
+            items.forEach(function (item) {
+                if (!item || typeof item !== 'object') {
+                    return;
+                }
+
+                /* Data lama: satu item punya beberapa rincian harga */
+                if (Array.isArray(item.prices) && item.prices.length > 0) {
+                    item.prices.forEach(function (row, index) {
+                        const suffix = index === 0 ? '' : ' (' + (index + 1) + ')';
+                        result.push(createItemRecord(
+                            (item.name || '') + suffix,
+                            parseNumber(row.price),
+                            parseNumber(row.pax !== undefined ? row.pax : row.qty),
+                            usedIds
+                        ));
+                    });
+                    return;
+                }
+
+                result.push(createItemRecord(
+                    item.name || '',
+                    parseNumber(item.price),
+                    parseNumber(item.pax !== undefined ? item.pax : item.qty),
+                    usedIds,
+                    item.id
+                ));
+            });
+
+            return result;
         }
 
-        // Project List View
+        function createItemRecord(name, price, pax, usedIds, preferredId) {
+            let id = preferredId ? String(preferredId).replace(/[^a-zA-Z0-9_-]/g, '') : '';
+
+            if (!id || (usedIds && usedIds[id])) {
+                id = generateId();
+            }
+
+            if (usedIds) {
+                usedIds[id] = true;
+            }
+
+            return {
+                id: id,
+                name: String(name === null || name === undefined ? '' : name),
+                price: price,
+                pax: pax
+            };
+        }
+
+        /* Daftar item default untuk project baru */
+        function createDefaultItems() {
+            return DEFAULT_ITEM_NAMES.map(function (name) {
+                return createItemRecord(name, 0, 0, null);
+            });
+        }
+
+        /* =========================================================
+           PERHITUNGAN
+        ========================================================= */
+
+        function getItemTotal(item) {
+            if (!item) {
+                return 0;
+            }
+            return parseNumber(item.price) * parseNumber(item.pax);
+        }
+
+        function getTotalExpenses(project) {
+            if (!project || !Array.isArray(project.items)) {
+                return 0;
+            }
+
+            return project.items.reduce(function (sum, item) {
+                return sum + getItemTotal(item);
+            }, 0);
+        }
+
+        /* Profit Per Pax = Harga Per Pax - (Total Pengeluaran / Jumlah Pax) */
+        function getProfitPerPax(project) {
+            if (!project) {
+                return 0;
+            }
+
+            const pax = parseNumber(project.pax);
+            const hargaPerPax = parseNumber(project.pricePerPax);
+
+            if (pax <= 0) {
+                return hargaPerPax;
+            }
+
+            return hargaPerPax - (getTotalExpenses(project) / pax);
+        }
+
+        /* Balance Due = (Harga Per Pax x Jumlah Pax) - Total Pengeluaran */
+        function getBalanceDue(project) {
+            if (!project) {
+                return 0;
+            }
+
+            return (parseNumber(project.pricePerPax) * parseNumber(project.pax)) - getTotalExpenses(project);
+        }
+
+        function getProjectDateLabel(project) {
+            if (!project) {
+                return '';
+            }
+
+            const label = formatDateRangeLabel(project.eventDates);
+            if (label) {
+                return label;
+            }
+
+            if (project.startDate) {
+                return formatDate(project.startDate) + (project.endDate ? ' - ' + formatDate(project.endDate) : '');
+            }
+
+            return '';
+        }
+
+        /* =========================================================
+           DAFTAR PROJECT
+        ========================================================= */
+
         function renderProjectList() {
-            const listEl = document.getElementById('projectList');
-            const emptyEl = document.getElementById('emptyState');
+            const listElement = document.getElementById('projectList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (!listElement || !emptyState) {
+                return;
+            }
 
             if (projects.length === 0) {
-                listEl.innerHTML = '';
-                emptyEl.classList.remove('hidden');
-                return;
-            }
-
-            emptyEl.classList.add('hidden');
-            listEl.innerHTML = projects.map(project => {
-                const totalPerpax = (project.pricePerPax || 0) * (project.pax || 0);
-                const totalExpenses = (project.items || []).reduce((sum, item) => {
-                    return sum + ((item.price || 0) * (item.qty || 0));
-                }, 0);
-                const balance = totalPerpax - totalExpenses;
-                const balanceClass = balance >= 0 ? 'balance-positive' : 'balance-negative';
-                const balanceSign = balance >= 0 ? '+' : '';
-
-                return `
-                    <div class="project-card fade-in" onclick="openProject('${project.id}')">
-                        <div class="project-name">${escapeHtml(project.name)}</div>
-                        ${project.date ? `<div class="project-date">📅 ${formatDate(project.date)}</div>` : ''}
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <div class="project-stat-label">Pax</div>
-                                <div class="project-stat-value mono">${project.pax || 0}</div>
-                            </div>
-                            <div class="project-stat">
-                                <div class="project-stat-label">Total Perpax</div>
-                                <div class="project-stat-value mono">${formatRupiah(totalPerpax)}</div>
-                            </div>
-                            <div class="project-stat">
-                                <div class="project-stat-label">Balance</div>
-                                <div class="project-stat-value mono ${balanceClass}">${balanceSign}${formatRupiah(balance)}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Project CRUD
-        function showNewProjectModal() {
-            document.getElementById('projectModalTitle').textContent = 'Project Baru';
-            document.getElementById('modalProjectName').value = '';
-            document.getElementById('modalProjectDate').value = '';
-            document.getElementById('modalProjectPax').value = '';
-            document.getElementById('modalProjectPrice').value = '';
-            openModal('projectModal');
-        }
-
-        function saveProject() {
-            const name = document.getElementById('modalProjectName').value.trim();
-            const date = document.getElementById('modalProjectDate').value;
-            const pax = parseInt(document.getElementById('modalProjectPax').value) || 0;
-            const pricePerPax = parseInt(document.getElementById('modalProjectPrice').value) || 0;
-
-            if (!name || pax <= 0 || pricePerPax <= 0) {
-                alert('Mohon lengkapi nama event, jumlah pax, dan harga per pax');
-                return;
-            }
-
-            const project = {
-                id: Date.now().toString(),
-                name,
-                date,
-                pax,
-                pricePerPax,
-                items: [],
-                createdAt: new Date().toISOString()
-            };
-
-            projects.push(project);
-            saveProjects();
-            closeModal('projectModal');
-            renderProjectList();
-        }
-
-        function openProject(projectId) {
-            currentProjectId = projectId;
-            const project = projects.find(p => p.id === projectId);
-            if (!project) return;
-
-            document.getElementById('projectListView').classList.add('hidden');
-            document.getElementById('projectDetailView').classList.remove('hidden');
-
-            // Fill project info
-            document.getElementById('projectName').value = project.name;
-            document.getElementById('projectDate').value = project.date || '';
-            document.getElementById('projectPax').value = project.pax || 0;
-            document.getElementById('projectPricePerPax').value = project.pricePerPax || 0;
-
-            renderItems();
-            updateSummary();
-        }
-
-        function showProjectList() {
-            currentProjectId = null;
-            document.getElementById('projectDetailView').classList.add('hidden');
-            document.getElementById('projectListView').classList.remove('hidden');
-            renderProjectList();
-        }
-
-        function updateProjectInfo() {
-            if (!currentProjectId) return;
-
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
-
-            project.name = document.getElementById('projectName').value.trim();
-            project.date = document.getElementById('projectDate').value;
-            project.pax = parseInt(document.getElementById('projectPax').value) || 0;
-            project.pricePerPax = parseInt(document.getElementById('projectPricePerPax').value) || 0;
-
-            saveProjects();
-            updateSummary();
-        }
-
-        function deleteCurrentProject() {
-            if (!confirm('Apakah Anda yakin ingin menghapus project ini? Tindakan ini tidak dapat dibatalkan.')) {
-                return;
-            }
-
-            projects = projects.filter(p => p.id !== currentProjectId);
-            saveProjects();
-            showProjectList();
-        }
-
-        // Items CRUD
-        function renderItems() {
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
-
-            const itemsList = document.getElementById('itemsList');
-            const emptyState = document.getElementById('emptyItemsState');
-
-            if (!project.items || project.items.length === 0) {
-                itemsList.innerHTML = '';
+                listElement.innerHTML = '';
                 emptyState.classList.remove('hidden');
                 return;
             }
 
             emptyState.classList.add('hidden');
-            itemsList.innerHTML = project.items.map((item, index) => {
-                const total = (item.price || 0) * (item.qty || 0);
-                return `
-                    <div class="item-card fade-in">
-                        <div class="item-header">
-                            <div class="item-name">${index + 1}. ${escapeHtml(item.name)}</div>
-                            <div class="item-actions">
-                                <button class="btn btn-secondary btn-small btn-icon" onclick="editItem('${item.id}')" title="Edit">✏️</button>
-                                <button class="btn btn-danger btn-icon" onclick="deleteItem('${item.id}')" title="Hapus">🗑</button>
-                            </div>
-                        </div>
-                        <div class="item-details">
-                            <div>
-                                <div class="project-stat-label">Harga</div>
-                                <div class="project-stat-value mono">${formatRupiah(item.price)}</div>
-                            </div>
-                            <div>
-                                <div class="project-stat-label">Qty</div>
-                                <div class="project-stat-value mono">${item.qty}</div>
-                            </div>
-                        </div>
-                        <div class="item-total">Total: ${formatRupiah(total)}</div>
-                    </div>
-                `;
+
+            listElement.innerHTML = projects.map(function (project) {
+                const balance = getBalanceDue(project);
+                const balanceClass = balance >= 0 ? 'balance-positive' : 'balance-negative';
+                const balanceSign = balance >= 0 ? '+' : '';
+                const dateLabel = getProjectDateLabel(project);
+                const destinations = (project.destinations || []).join(', ');
+
+                return '' +
+                    '<div class="project-card fade-in" onclick="openProjectToBudgeting(\'' + project.id + '\')">' +
+                        '<div class="project-card-head">' +
+                            '<div class="project-name">' + escapeHtml(project.name) + '</div>' +
+                            '<button type="button" class="project-delete" title="Hapus project" ' +
+                                'onclick="event.stopPropagation(); deleteProject(\'' + project.id + '\')">🗑</button>' +
+                        '</div>' +
+                        (dateLabel
+                            ? '<div class="project-date">📅 ' + escapeHtml(dateLabel) + '</div>'
+                            : '') +
+                        (destinations
+                            ? '<div class="project-dest">📍 ' + escapeHtml(destinations) + '</div>'
+                            : '') +
+                        '<div class="project-stats">' +
+                            '<div class="project-stat">' +
+                                '<div class="project-stat-label">Pax</div>' +
+                                '<div class="project-stat-value mono">' + parseNumber(project.pax) + '</div>' +
+                            '</div>' +
+                            '<div class="project-stat">' +
+                                '<div class="project-stat-label">Harga/Pax</div>' +
+                                '<div class="project-stat-value mono">' + formatRupiah(project.pricePerPax) + '</div>' +
+                            '</div>' +
+                            '<div class="project-stat">' +
+                                '<div class="project-stat-label">Profit</div>' +
+                                '<div class="project-stat-value mono ' + balanceClass + '">' +
+                                    balanceSign + formatRupiah(balance) +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
             }).join('');
         }
 
-        function showAddItemModal() {
-            editingItemId = null;
-            document.getElementById('itemModalTitle').textContent = 'Tambah Item';
-            document.getElementById('modalItemName').value = '';
-            document.getElementById('modalItemPrice').value = '';
-            document.getElementById('modalItemQty').value = '';
-            openModal('itemModal');
-        }
+        function deleteProject(projectId) {
+            const project = projects.find(function (item) {
+                return item.id === projectId;
+            });
 
-        function editItem(itemId) {
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
-
-            const item = project.items.find(i => i.id === itemId);
-            if (!item) return;
-
-            editingItemId = itemId;
-            document.getElementById('itemModalTitle').textContent = 'Edit Item';
-            document.getElementById('modalItemName').value = item.name;
-            document.getElementById('modalItemPrice').value = item.price || '';
-            document.getElementById('modalItemQty').value = item.qty || '';
-            openModal('itemModal');
-        }
-
-        function saveItem() {
-            const name = document.getElementById('modalItemName').value.trim();
-            const price = parseInt(document.getElementById('modalItemPrice').value) || 0;
-            const qty = parseInt(document.getElementById('modalItemQty').value) || 0;
-
-            if (!name || price <= 0 || qty <= 0) {
-                alert('Mohon lengkapi nama item, harga, dan qty');
+            if (!project) {
                 return;
             }
 
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
+            if (!confirm('Hapus project "' + project.name + '" beserta seluruh itemnya?')) {
+                return;
+            }
 
-            if (editingItemId) {
-                // Edit existing item
-                const item = project.items.find(i => i.id === editingItemId);
-                if (item) {
-                    item.name = name;
-                    item.price = price;
-                    item.qty = qty;
+            projects = projects.filter(function (item) {
+                return item.id !== projectId;
+            });
+
+            if (currentProjectId === projectId) {
+                currentProjectId = null;
+                draftProject = null;
+            }
+
+            saveProjects();
+            renderProjectList();
+        }
+
+        /* =========================================================
+           LANGKAH 1 - FORM PROJECT BARU
+        ========================================================= */
+
+        function startNewProject() {
+            setFormTitle('Project Baru');
+            setFormButtonLabel('Next');
+            resetNewProjectForm();
+            openModal('formModal');
+
+            const nameInput = document.getElementById('newProjectName');
+            if (nameInput) {
+                nameInput.focus();
+            }
+        }
+
+        function setFormTitle(title) {
+            const element = document.getElementById('formCardTitle');
+
+            if (element) {
+                element.textContent = title;
+            }
+        }
+
+        function setFormButtonLabel(label) {
+            const button = document.getElementById('formNextBtn');
+            
+            if (button) {
+                button.textContent = label;
+            }
+        }
+
+        function resetNewProjectForm() {
+            document.getElementById('newProjectName').value = '';
+            document.getElementById('newProjectPax').value = '';
+            document.getElementById('newProjectStart').value = '';
+            document.getElementById('newProjectEnd').value = '';
+
+            destinationTags = [];
+            renderDestinationTags();
+
+            selectedEventDates = [];
+            rangeStart = null;
+            rangeEnd = null;
+            calendarCursor = new Date();
+            berangkatAutoFilled = true;
+
+            closeCalendar();
+            updateEventDateDisplay();
+        }
+        function cancelNewProject() {
+        /* Saat sedang mengubah info project yang sudah ada,
+         tombol Batal cuma menutup modal, layar Budgeting
+         di belakangnya tetap seperti semula. */
+         if (editingExisting && draftProject) {
+            closeModal('formModal');
+            return;
+        }
+        resetNewProjectForm();
+        draftProject = null;
+        draftIsNew = false;
+        editingExisting = false;
+        currentProjectId = null;
+        
+        renderProjectList();
+        closeModal('formModal');
+    }
+        
+
+        /* ---------------- Tujuan (bisa lebih dari satu) ---------------- */
+
+        function renderDestinationTags() {
+            const wrapper = document.getElementById('destinationWrapper');
+            const input = document.getElementById('newProjectDestInput');
+
+            if (!wrapper || !input) {
+                return;
+            }
+
+            wrapper.querySelectorAll('.tag').forEach(function (tag) {
+                tag.remove();
+            });
+
+            destinationTags.forEach(function (tag, index) {
+                const element = document.createElement('span');
+                element.className = 'tag';
+                element.innerHTML = escapeHtml(tag) +
+                    '<button type="button" class="tag-remove" onclick="removeDestinationTag(' + index + ')">&times;</button>';
+                wrapper.insertBefore(element, input);
+            });
+
+            input.placeholder = destinationTags.length > 0
+                ? ''
+                : 'Contoh: Pangandaran, Citumang, Batu Karas';
+        }
+
+        function onDestinationKeydown(event) {
+            if (event.key === 'Enter' || event.key === ',') {
+                event.preventDefault();
+                commitDestinationInput();
+                return;
+            }
+
+            /* Backspace pada input kosong menghapus tag terakhir */
+            if (event.key === 'Backspace' && event.target.value === '' && destinationTags.length > 0) {
+                destinationTags.pop();
+                renderDestinationTags();
+            }
+        }
+
+        function commitDestinationInput() {
+            const input = document.getElementById('newProjectDestInput');
+
+            if (!input) {
+                return;
+            }
+
+            addDestinationTags(input.value);
+            input.value = '';
+        }
+
+        function addDestinationTags(rawValue) {
+            if (!rawValue) {
+                return;
+            }
+
+            let changed = false;
+
+            String(rawValue).split(',').forEach(function (part) {
+                const value = part.trim();
+
+                if (value === '' || destinationTags.indexOf(value) !== -1) {
+                    return;
                 }
-            } else {
-                // Add new item
-                project.items.push({
-                    id: Date.now().toString(),
-                    name,
-                    price,
-                    qty
-                });
-            }
 
-            saveProjects();
-            closeModal('itemModal');
-            renderItems();
-            updateSummary();
+                destinationTags.push(value);
+                changed = true;
+            });
+
+            if (changed) {
+                renderDestinationTags();
+            }
         }
 
-        function deleteItem(itemId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+        function removeDestinationTag(index) {
+            destinationTags.splice(index, 1);
+            renderDestinationTags();
+        }
+
+        /* ---------------- Tanggal Event (rentang beberapa hari) ---------------- */
+
+        function toggleCalendar() {
+            const panel = document.getElementById('calendarPanel');
+
+            if (!panel) {
                 return;
             }
 
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
+            if (panel.classList.contains('hidden')) {
+                openCalendar();
+            } else {
+                closeCalendar();
+            }
+        }
 
-            project.items = project.items.filter(i => i.id !== itemId);
-            saveProjects();
-            renderItems();
+        function openCalendar() {
+            const panel = document.getElementById('calendarPanel');
+
+            if (!panel) {
+                return;
+            }
+
+            const anchorIso = rangeStart
+                ? rangeStart
+                : (selectedEventDates.length > 0 ? selectedEventDates[0] : null);
+
+            const anchorDate = parseIsoDate(anchorIso);
+            calendarCursor = anchorDate
+                ? new Date(anchorDate.getFullYear(), anchorDate.getMonth(), 1)
+                : new Date();
+
+            panel.classList.remove('hidden');
+            renderCalendar();
+        }
+
+        function closeCalendar() {
+            const panel = document.getElementById('calendarPanel');
+
+            if (panel) {
+                panel.classList.add('hidden');
+            }
+        }
+
+        function changeCalendarMonth(offset) {
+            calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() + offset, 1);
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const monthLabel = document.getElementById('calendarMonthLabel');
+            const grid = document.getElementById('calendarGrid');
+            const hint = document.getElementById('calendarHint');
+
+            if (!monthLabel || !grid) {
+                return;
+            }
+
+            const year = calendarCursor.getFullYear();
+            const month = calendarCursor.getMonth();
+
+            monthLabel.textContent = MONTHS_FULL[month] + ' ' + year;
+
+            const firstDay = new Date(year, month, 1);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const offset = firstDay.getDay();
+            const todayIso = toIsoDate(new Date());
+
+            let html = '';
+
+            for (let i = 0; i < offset; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const iso = toIsoDate(new Date(year, month, day));
+                const classes = ['calendar-day'];
+
+                if (selectedEventDates.indexOf(iso) !== -1) {
+                    classes.push('in-range');
+                }
+
+                if (iso === rangeStart || iso === rangeEnd) {
+                    classes.push('selected');
+                }
+
+                if (iso === todayIso) {
+                    classes.push('today');
+                }
+
+                html += '<div class="' + classes.join(' ') + '" onclick="selectCalendarDay(\'' + iso + '\')">' + day + '</div>';
+            }
+
+            grid.innerHTML = html;
+
+            if (hint) {
+                hint.textContent = (rangeStart && !rangeEnd)
+                    ? 'Sekarang ketuk tanggal terakhir event.'
+                    : 'Ketuk tanggal mulai, lalu ketuk tanggal akhir.';
+            }
+        }
+
+        function selectCalendarDay(iso) {
+            if (!rangeStart || (rangeStart && rangeEnd)) {
+                rangeStart = iso;
+                rangeEnd = null;
+                selectedEventDates = [iso];
+            } else if (iso < rangeStart) {
+                rangeEnd = rangeStart;
+                rangeStart = iso;
+                selectedEventDates = buildDateRange(rangeStart, rangeEnd);
+            } else {
+                rangeEnd = iso;
+                selectedEventDates = buildDateRange(rangeStart, rangeEnd);
+            }
+
+            updateEventDateDisplay();
+            prefillBerangkatPulang();
+            renderCalendar();
+        }
+
+        function resetEventDates() {
+            rangeStart = null;
+            rangeEnd = null;
+            selectedEventDates = [];
+
+            updateEventDateDisplay();
+            renderCalendar();
+        }
+
+        function updateEventDateDisplay() {
+            const input = document.getElementById('newProjectDateRange');
+
+            if (input) {
+                input.value = formatDateRangeLabel(selectedEventDates);
+            }
+        }
+
+        /* Berangkat & Pulang ikut terisi selama belum diubah manual */
+        function prefillBerangkatPulang() {
+            if (!berangkatAutoFilled || selectedEventDates.length === 0) {
+                return;
+            }
+
+            const startInput = document.getElementById('newProjectStart');
+            const endInput = document.getElementById('newProjectEnd');
+
+            if (!startInput || !endInput) {
+                return;
+            }
+
+            startInput.value = selectedEventDates[0];
+            endInput.value = selectedEventDates[selectedEventDates.length - 1];
+        }
+
+        /* Begitu user ubah sendiri tanggal berangkat/pulang,
+           rentang tanggal event tidak lagi menimpanya. */
+        function markBerangkatManual() {
+            berangkatAutoFilled = false;
+        }
+
+        /* ---------------- Next: masuk ke layar Budgeting ---------------- */
+
+        function goToBudgeting() {
+            commitDestinationInput();
+
+            const name = document.getElementById('newProjectName').value.trim();
+            const pax = parseNumber(document.getElementById('newProjectPax').value);
+
+            if (!name) {
+                alert('Mohon isi nama event.');
+                return;
+            }
+
+            if (pax <= 0) {
+                alert('Mohon isi jumlah pax (lebih dari 0).');
+                return;
+            }
+
+            /* Kalau sedang mengubah info event project yang sudah ada,
+               id, daftar item, dan harga per pax tetap dipertahankan. */
+            const isEditingExisting = editingExisting && draftProject !== null;
+
+            draftProject = {
+                id: isEditingExisting ? draftProject.id : generateId(),
+                name: name,
+                destinations: destinationTags.slice(),
+                eventDates: selectedEventDates.slice(),
+                startDate: document.getElementById('newProjectStart').value || '',
+                endDate: document.getElementById('newProjectEnd').value || '',
+                pax: pax,
+                pricePerPax: isEditingExisting ? parseNumber(draftProject.pricePerPax) : 0,
+                items: isEditingExisting ? draftProject.items : createDefaultItems(),
+                createdAt: isEditingExisting && draftProject.createdAt
+                    ? draftProject.createdAt
+                    : new Date().toISOString()
+            };
+
+            draftIsNew = !isEditingExisting;
+            editingExisting = isEditingExisting;
+            currentProjectId = draftProject.id;
+
+            renderBudgeting();
+            closeModal('formModal');
+            showView('budgetingView');
+        }
+
+        /* Buka project yang sudah tersimpan langsung ke layar Budgeting */
+        function openProjectToBudgeting(projectId) {
+            const project = projects.find(function (item) {
+                return item.id === projectId;
+            });
+
+            if (!project) {
+                return;
+            }
+
+            draftProject = JSON.parse(JSON.stringify(project));
+            draftIsNew = false;
+            editingExisting = true;
+            currentProjectId = project.id;
+
+            renderBudgeting();
+            showView('budgetingView');
+        }
+
+        /* Ubah info event (nama, tanggal, tujuan, pax) dari layar Budgeting.
+           Daftar item & harga per pax tidak diubah. */
+        function editProjectInfo() {
+            if (!draftProject) {
+                return;
+            }
+
+            setFormTitle('Ubah Info Event');
+
+            document.getElementById('newProjectName').value = draftProject.name || '';
+            document.getElementById('newProjectPax').value = parseNumber(draftProject.pax) || '';
+            document.getElementById('newProjectStart').value = draftProject.startDate || '';
+            document.getElementById('newProjectEnd').value = draftProject.endDate || '';
+
+            destinationTags = Array.isArray(draftProject.destinations)
+                ? draftProject.destinations.slice()
+                : [];
+            renderDestinationTags();
+
+            selectedEventDates = normalizeDateList(draftProject.eventDates);
+
+            if (selectedEventDates.length > 0) {
+                rangeStart = selectedEventDates[0];
+                rangeEnd = selectedEventDates.length > 1
+                    ? selectedEventDates[selectedEventDates.length - 1]
+                    : null;
+            } else {
+                rangeStart = null;
+                rangeEnd = null;
+            }
+
+            updateEventDateDisplay();
+            closeCalendar();
+
+            /* tanggal berangkat/pulang diambil dari data project,
+               jadi jangan ditimpa rentang tanggal event */
+            berangkatAutoFilled = false;
+
+            setFormButtonLabel('Simpan');
+            openModal('formModal');
+        }
+
+        /* =========================================================
+           LANGKAH 2 - LAYAR BUDGETING
+        ========================================================= */
+
+        function renderBudgeting() {
+            if (!draftProject) {
+                return;
+            }
+
+            const subtitle = document.getElementById('budgetingSubtitle');
+            const destinations = (draftProject.destinations || []).join(', ');
+
+            /* contoh: "SMAN 77 Jakarta to Yogyakarta" */
+            subtitle.textContent = destinations
+                ? draftProject.name + ' to ' + destinations
+                : draftProject.name;
+
+            document.getElementById('pricePerPaxInput').value = parseNumber(draftProject.pricePerPax) || '';
+
+            renderItemsTable();
             updateSummary();
         }
 
-        // Summary
-        function updateSummary() {
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
+        /* ---------------- Daftar item ---------------- */
 
-            const totalPerpax = (project.pricePerPax || 0) * (project.pax || 0);
-            const totalExpenses = (project.items || []).reduce((sum, item) => {
-                return sum + ((item.price || 0) * (item.qty || 0));
-            }, 0);
-            const balance = totalPerpax - totalExpenses;
+        function renderItemsTable(focusItemId) {
+            const listElement = document.getElementById('itemsList');
+            const emptyState = document.getElementById('emptyItemsState');
 
-            document.getElementById('summaryTotalPerpax').textContent = formatRupiah(totalPerpax);
-            document.getElementById('summaryTotalExpenses').textContent = formatRupiah(totalExpenses);
+            if (!listElement || !emptyState) {
+                return;
+            }
 
-            const balanceEl = document.getElementById('summaryBalance');
-            balanceEl.textContent = (balance >= 0 ? '+' : '') + formatRupiah(balance);
-            balanceEl.className = 'summary-value mono ' + (balance >= 0 ? 'balance-positive' : 'balance-negative');
+            const items = (draftProject && Array.isArray(draftProject.items))
+                ? draftProject.items
+                : [];
+
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            listElement.innerHTML = items.map(function (item, index) {
+                return buildItemRow(item, index);
+            }).join('') + buildTotalRow();
+
+            if (focusItemId) {
+                const input = listElement.querySelector('.item-input-name[data-item-id="' + focusItemId + '"]');
+
+                if (input) {
+                    input.focus();
+                }
+            }
         }
 
-        // Modal Operations
+        function buildItemRow(item, index) {
+            const id = item.id;
+
+            return '' +
+                '<div class="item-row">' +
+                    '<div class="item-no">' + (index + 1) + '</div>' +
+                    '<input type="text" class="item-input item-input-name" data-item-id="' + id + '" ' +
+                        'placeholder="Nama item" value="' + escapeHtml(item.name || '') + '" ' +
+                        'oninput="updateItemName(\'' + id + '\', this.value)">' +
+                    '<input type="number" class="item-input item-input-price" min="0" inputmode="numeric" ' +
+                        'placeholder="0" value="' + (parseNumber(item.price) || '') + '" ' +
+                        'oninput="updateItemPrice(\'' + id + '\', this.value)">' +
+                    '<input type="number" class="item-input item-input-pax" min="0" inputmode="numeric" ' +
+                        'placeholder="0" value="' + (parseNumber(item.pax) || '') + '" ' +
+                        'oninput="updateItemPax(\'' + id + '\', this.value)">' +
+                    '<div class="item-total-cell mono" id="itemTotal-' + id + '">' +
+                        formatRupiah(getItemTotal(item)) +
+                    '</div>' +
+                '</div>';
+        }
+
+        function buildTotalRow() {
+            return '' +
+                '<div class="item-row total-row">' +
+                    '<div class="total-row-label">Total Pengeluaran</div>' +
+                    '<div class="total-row-value mono" id="totalExpensesValue">' +
+                        formatRupiah(getTotalExpenses(draftProject)) +
+                    '</div>' +
+                '</div>';
+        }
+
+        /* ---------------- Edit item langsung di baris ---------------- */
+
+        function findDraftItem(itemId) {
+            if (!draftProject || !Array.isArray(draftProject.items)) {
+                return null;
+            }
+
+            return draftProject.items.find(function (item) {
+                return item.id === itemId;
+            }) || null;
+        }
+
+        function updateItemName(itemId, value) {
+            const item = findDraftItem(itemId);
+
+            if (item) {
+                item.name = value;
+            }
+        }
+
+        function updateItemPrice(itemId, value) {
+            const item = findDraftItem(itemId);
+
+            if (!item) {
+                return;
+            }
+
+            item.price = parseNumber(value);
+            refreshItemTotal(item);
+            updateSummary();
+        }
+
+        function updateItemPax(itemId, value) {
+            const item = findDraftItem(itemId);
+
+            if (!item) {
+                return;
+            }
+
+            item.pax = parseNumber(value);
+            refreshItemTotal(item);
+            updateSummary();
+        }
+
+        function refreshItemTotal(item) {
+            const cell = document.getElementById('itemTotal-' + item.id);
+
+            if (cell) {
+                cell.textContent = formatRupiah(getItemTotal(item));
+            }
+        }
+
+        /* Tambah satu baris item baru (kosong) */
+        function addItem() {
+            if (!draftProject) {
+                return;
+            }
+
+            const item = createItemRecord('', 0, 0, null);
+            draftProject.items.push(item);
+
+            renderItemsTable(item.id);
+            updateSummary();
+        }
+
+        /* =========================================================
+           HAPUS ITEM - pilih satu atau beberapa item
+        ========================================================= */
+
+        function showDeleteItemsModal() {
+            if (!draftProject || !Array.isArray(draftProject.items) || draftProject.items.length === 0) {
+                alert('Belum ada item yang bisa dihapus.');
+                return;
+            }
+
+            itemsToDelete = new Set();
+            renderDeleteList();
+            openModal('deleteItemsModal');
+        }
+
+        function renderDeleteList() {
+            const container = document.getElementById('deleteListContainer');
+
+            if (!container) {
+                return;
+            }
+
+            const items = draftProject.items || [];
+
+            container.innerHTML = items.map(function (item, index) {
+                const selected = itemsToDelete.has(item.id);
+
+                return '' +
+                    '<label class="delete-item-option' + (selected ? ' selected' : '') + '">' +
+                        '<input type="checkbox" ' + (selected ? 'checked' : '') + ' ' +
+                            'onchange="toggleDeleteItem(\'' + item.id + '\', this.checked)">' +
+                        '<span class="item-name-text">' + (index + 1) + '. ' +
+                            escapeHtml(item.name || '(tanpa nama)') + '</span>' +
+                        '<span class="item-price-text mono">' + formatRupiah(getItemTotal(item)) + '</span>' +
+                    '</label>';
+            }).join('');
+        }
+
+        function toggleDeleteItem(itemId, checked) {
+            if (checked) {
+                itemsToDelete.add(itemId);
+            } else {
+                itemsToDelete.delete(itemId);
+            }
+
+            renderDeleteList();
+        }
+
+        function confirmDeleteItems() {
+            if (itemsToDelete.size === 0) {
+                alert('Pilih minimal satu item yang ingin dihapus.');
+                return;
+            }
+
+            const names = draftProject.items
+                .filter(function (item) {
+                    return itemsToDelete.has(item.id);
+                })
+                .map(function (item) {
+                    return '- ' + (item.name || '(tanpa nama)');
+                });
+
+            if (!confirm('Hapus ' + itemsToDelete.size + ' item berikut?\n\n' + names.join('\n'))) {
+                return;
+            }
+
+            draftProject.items = draftProject.items.filter(function (item) {
+                return !itemsToDelete.has(item.id);
+            });
+
+            itemsToDelete = new Set();
+            closeModal('deleteItemsModal');
+
+            renderItemsTable();
+            updateSummary();
+        }
+
+        /* =========================================================
+           BAGIAN "DIISI MANUAL" & HASIL AKHIR
+        ========================================================= */
+
+        /* Harga Per Pax diisi manual oleh user */
+        function updatePricePerPax(value) {
+            if (!draftProject) {
+                return;
+            }
+
+            draftProject.pricePerPax = parseNumber(value);
+            updateSummary();
+        }
+
+        function updateSummary() {
+            if (!draftProject) {
+                return;
+            }
+
+            const totalExpensesElement = document.getElementById('totalExpensesValue');
+
+            if (totalExpensesElement) {
+                totalExpensesElement.textContent = formatRupiah(getTotalExpenses(draftProject));
+            }
+
+            /* Profit Per Pax = Harga Per Pax - (Total Pengeluaran / Jumlah Pax) */
+            document.getElementById('profitPerPaxInput').value = formatRupiah(getProfitPerPax(draftProject));
+
+            /* Balance Due = (Harga Per Pax x Jumlah Pax) - Total Pengeluaran */
+            const balance = getBalanceDue(draftProject);
+            const box = document.getElementById('balanceBox');
+            const label = document.getElementById('balanceLabel');
+            const value = document.getElementById('balanceValue');
+
+            if (balance >= 0) {
+                box.className = 'highlight-box highlight-positive';
+                label.textContent = 'Profit';
+                value.textContent = '+' + formatRupiah(balance);
+            } else {
+                box.className = 'highlight-box highlight-negative';
+                label.textContent = 'Minus';
+                value.textContent = formatRupiah(balance);
+            }
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+            const modal = document.getElementById(modalId);
+
+            if (modal) {
+                modal.classList.add('active');
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
 
-        // Close modal on overlay click
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
+        /* =========================================================
+           SIMPAN / BATAL
+        ========================================================= */
 
-        // Export to Excel
-        function exportToExcel() {
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
-
-            const totalPerpax = (project.pricePerPax || 0) * (project.pax || 0);
-            const totalExpenses = (project.items || []).reduce((sum, item) => {
-                return sum + ((item.price || 0) * (item.qty || 0));
-            }, 0);
-            const balance = totalPerpax - totalExpenses;
-
-            // Prepare data
-            const data = [];
-            
-            // Header info
-            data.push([{ name: 'Nama Event', value: project.name }]);
-            if (project.date) {
-                data.push([{ name: 'Tanggal', value: formatDate(project.date) }]);
+        function saveBudgeting() {
+            if (!draftProject) {
+                return;
             }
-            data.push([{ name: 'Jumlah Pax', value: project.pax }]);
-            data.push([{ name: 'Harga Per Pax', value: formatRupiah(project.pricePerPax) }]);
-            data.push([]); // Empty row
 
-            // Items header
-            data.push(['No', 'Uraian', 'Harga', 'Qty', 'Total']);
-            
-            // Items
-            (project.items || []).forEach((item, index) => {
-                const total = (item.price || 0) * (item.qty || 0);
-                data.push([
+            const name = String(draftProject.name || '').trim();
+            const pax = parseNumber(draftProject.pax);
+
+            if (!name) {
+                alert('Nama event belum diisi.');
+                return;
+            }
+
+            if (pax <= 0) {
+                alert('Jumlah pax harus lebih dari 0.');
+                return;
+            }
+
+            draftProject.name = name;
+            draftProject.pax = pax;
+
+            /* Baris yang benar-benar kosong tidak ikut disimpan */
+            draftProject.items = (draftProject.items || []).filter(function (item) {
+                return String(item.name || '').trim() !== '' ||
+                    parseNumber(item.price) > 0 ||
+                    parseNumber(item.pax) > 0;
+            });
+
+            draftProject.updatedAt = new Date().toISOString();
+
+            const index = projects.findIndex(function (item) {
+                return item.id === draftProject.id;
+            });
+
+            if (index >= 0) {
+                projects[index] = draftProject;
+            } else {
+                projects.push(draftProject);
+            }
+
+            saveProjects();
+
+            draftProject = null;
+            draftIsNew = false;
+            editingExisting = false;
+            currentProjectId = null;
+
+            renderProjectList();
+            showView('listView');
+        }
+
+        function cancelBudgeting() {
+            const wasNew = draftIsNew;
+
+            draftProject = null;
+            draftIsNew = false;
+            editingExisting = false;
+
+            if (wasNew) {
+                /* Balik ke form project baru, isian user tetap ada */
+                renderProjectList();
+                showView('formView');
+                return;
+            }
+
+            currentProjectId = null;
+            renderProjectList();
+            showView('listView');
+        }
+
+        /* Data yang dipakai export: draft (kalau ada) atau project tersimpan */
+        function getActiveProject() {
+            if (draftProject) {
+                return draftProject;
+            }
+
+            return projects.find(function (item) {
+                return item.id === currentProjectId;
+            }) || null;
+        }
+
+        function buildExportFileName(project, extension) {
+            const safeName = String(project.name || 'Budgeting').replace(/[^a-z0-9]/gi, '_');
+            return 'Budgeting_' + safeName + '_' + toIsoDate(new Date()) + '.' + extension;
+        }
+
+        /* =========================================================
+           EXPORT EXCEL (kolom memakai istilah Pax)
+        ========================================================= */
+
+        function exportToExcel() {
+            const project = getActiveProject();
+
+            if (!project) {
+                alert('Tidak ada data budgeting untuk di-export.');
+                return;
+            }
+
+            if (typeof XLSX === 'undefined') {
+                alert('Library Excel belum tersedia. Periksa koneksi internet Anda.');
+                return;
+            }
+
+            const items = Array.isArray(project.items) ? project.items : [];
+            const totalExpenses = getTotalExpenses(project);
+            const profitPerPax = getProfitPerPax(project);
+            const balance = getBalanceDue(project);
+            const dateLabel = getProjectDateLabel(project);
+            const destinations = (project.destinations || []).join(', ');
+
+            const rows = [];
+
+            rows.push(['Nama Event', project.name || '']);
+
+            if (destinations) {
+                rows.push(['Tujuan', destinations]);
+            }
+
+            if (dateLabel) {
+                rows.push(['Tanggal Event', dateLabel]);
+            }
+
+            if (project.startDate) {
+                rows.push(['Berangkat', formatDate(project.startDate)]);
+            }
+
+            if (project.endDate) {
+                rows.push(['Pulang', formatDate(project.endDate)]);
+            }
+
+            rows.push(['Jumlah Pax', parseNumber(project.pax)]);
+            rows.push([]);
+            rows.push(['No', 'Uraian', 'Harga', 'Pax', 'Total']);
+
+            items.forEach(function (item, index) {
+                rows.push([
                     index + 1,
-                    item.name,
-                    item.price,
-                    item.qty,
-                    total
+                    item.name || '',
+                    parseNumber(item.price),
+                    parseNumber(item.pax),
+                    getItemTotal(item)
                 ]);
             });
 
-            data.push([]); // Empty row
+            rows.push(['', 'Total Pengeluaran', '', '', totalExpenses]);
+            rows.push([]);
+            rows.push(['', 'Harga Per Pax', '', '', parseNumber(project.pricePerPax)]);
+            rows.push(['', 'Profit Per Pax', '', '', Math.round(profitPerPax)]);
+            rows.push([
+                '',
+                balance >= 0 ? 'Balance Due / Profit' : 'Balance Due / Minus',
+                '',
+                '',
+                Math.round(balance)
+            ]);
 
-            // Summary
-            data.push(['', 'Total Harga Perpax', '', '', totalPerpax]);
-            data.push(['', 'Total Pengeluaran', '', '', totalExpenses]);
-            data.push(['', 'Balance Due', '', '', balance]);
+            const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
-            // Create workbook
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            
-            // Set column widths
-            ws['!cols'] = [
-                { wch: 5 },   // No
-                { wch: 30 },  // Uraian
-                { wch: 15 },  // Harga
-                { wch: 8 },   // Qty
-                { wch: 15 }   // Total
+            worksheet['!cols'] = [
+                { wch: 6 },
+                { wch: 35 },
+                { wch: 16 },
+                { wch: 8 },
+                { wch: 18 }
             ];
 
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Budgeting');
-            
-            // Download
-            const fileName = `Budgeting_${project.name.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.xlsx`;
-            XLSX.writeFile(wb, fileName);
+            const workbook = XLSX.utils.book_new();
+
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Budgeting');
+
+            XLSX.writeFile(workbook, buildExportFileName(project, 'xlsx'));
         }
 
-        // Export to PDF
-        function exportToPDF() {
-            const project = projects.find(p => p.id === currentProjectId);
-            if (!project) return;
+        /* =========================================================
+           EXPORT PDF (kolom memakai istilah Pax)
+        ========================================================= */
 
-            const totalPerpax = (project.pricePerPax || 0) * (project.pax || 0);
-            const totalExpenses = (project.items || []).reduce((sum, item) => {
-                return sum + ((item.price || 0) * (item.qty || 0));
-            }, 0);
-            const balance = totalPerpax - totalExpenses;
+        function exportToPDF() {
+            const project = getActiveProject();
+
+            if (!project) {
+                alert('Tidak ada data budgeting untuk di-export.');
+                return;
+            }
+
+            if (!window.jspdf || !window.jspdf.jsPDF) {
+                alert('Library PDF belum tersedia. Periksa koneksi internet Anda.');
+                return;
+            }
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            // Title
+            const items = Array.isArray(project.items) ? project.items : [];
+            const totalExpenses = getTotalExpenses(project);
+            const profitPerPax = getProfitPerPax(project);
+            const balance = getBalanceDue(project);
+            const dateLabel = getProjectDateLabel(project);
+            const destinations = (project.destinations || []).join(', ');
+
             doc.setFontSize(18);
             doc.setFont('helvetica', 'bold');
             doc.text('BUDGETING EVENT', 105, 20, { align: 'center' });
 
-            // Project info
             doc.setFontSize(12);
-            doc.setFont('helvetica', 'bold');
-            doc.text(project.name, 105, 30, { align: 'center' });
-            
+            doc.text(project.name || '', 105, 30, { align: 'center' });
+
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(10);
-            if (project.date) {
-                doc.text(`Tanggal: ${formatDate(project.date)}`, 105, 38, { align: 'center' });
-            }
-            doc.text(`Jumlah Pax: ${project.pax} | Harga Per Pax: ${formatRupiah(project.pricePerPax)}`, 105, 45, { align: 'center' });
 
-            // Items table
-            const tableData = (project.items || []).map((item, index) => {
-                const total = (item.price || 0) * (item.qty || 0);
+            let infoY = 38;
+
+            if (destinations) {
+                doc.text('Tujuan: ' + destinations, 105, infoY, { align: 'center' });
+                infoY += 6;
+            }
+
+            if (dateLabel) {
+                doc.text('Tanggal Event: ' + dateLabel, 105, infoY, { align: 'center' });
+                infoY += 6;
+            }
+
+            doc.text(
+                'Berangkat: ' + (project.startDate ? formatDate(project.startDate) : '-') +
+                '   Pulang: ' + (project.endDate ? formatDate(project.endDate) : '-'),
+                105,
+                infoY,
+                { align: 'center' }
+            );
+            infoY += 6;
+
+            doc.text('Jumlah Pax: ' + parseNumber(project.pax), 105, infoY, { align: 'center' });
+
+            const tableData = items.map(function (item, index) {
                 return [
                     index + 1,
-                    item.name,
+                    item.name || '',
                     formatRupiah(item.price),
-                    item.qty,
-                    formatRupiah(total)
+                    parseNumber(item.pax),
+                    formatRupiah(getItemTotal(item))
                 ];
             });
 
             doc.autoTable({
-                startY: 55,
-                head: [['No', 'Uraian', 'Harga', 'Qty', 'Total']],
+                startY: infoY + 8,
+                head: [['No', 'Uraian', 'Harga', 'Pax', 'Total']],
                 body: tableData,
+                foot: [['', 'Total Pengeluaran', '', '', formatRupiah(totalExpenses)]],
                 theme: 'grid',
                 headStyles: {
-                    fillColor: [245, 236, 222],
+                    fillColor: [239, 224, 201],
+                    textColor: [74, 59, 48],
+                    fontStyle: 'bold'
+                },
+                footStyles: {
+                    fillColor: [239, 224, 201],
                     textColor: [74, 59, 48],
                     fontStyle: 'bold'
                 },
                 styles: {
-                    fontSize: 10,
-                    cellPadding: 5
+                    fontSize: 9,
+                    cellPadding: 4
                 },
                 columnStyles: {
-                    0: { cellWidth: 15, halign: 'center' },
+                    0: { cellWidth: 12, halign: 'center' },
                     1: { cellWidth: 70 },
-                    2: { cellWidth: 35, halign: 'right' },
-                    3: { cellWidth: 20, halign: 'center' },
-                    4: { cellWidth: 35, halign: 'right' }
+                    2: { cellWidth: 32, halign: 'right' },
+                    3: { cellWidth: 18, halign: 'center' },
+                    4: { cellWidth: 38, halign: 'right' }
                 }
             });
 
-            // Summary
             const finalY = doc.lastAutoTable.finalY + 10;
-            
+
             doc.setFontSize(11);
             doc.setFont('helvetica', 'bold');
             doc.text('Ringkasan:', 14, finalY);
-            
+
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(10);
-            doc.text(`Total Harga Perpax: ${formatRupiah(totalPerpax)}`, 14, finalY + 8);
-            doc.text(`Total Pengeluaran: ${formatRupiah(totalExpenses)}`, 14, finalY + 16);
-            
-            doc.setFont('helvetica', 'bold');
-            const balanceText = `Balance Due: ${balance >= 0 ? '+' : ''}${formatRupiah(balance)}`;
-            doc.text(balanceText, 14, finalY + 24);
+            doc.text('Harga Per Pax: ' + formatRupiah(project.pricePerPax), 14, finalY + 8);
+            doc.text('Profit Per Pax: ' + formatRupiah(profitPerPax), 14, finalY + 16);
 
-            // Footer
+            doc.setFont('helvetica', 'bold');
+            doc.text(
+                (balance >= 0 ? 'Profit: +' : 'Minus: ') + formatRupiah(balance),
+                14,
+                finalY + 24
+            );
+
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8);
-            doc.text(`Dicetak: ${new Date().toLocaleString('id-ID')}`, 105, 280, { align: 'center' });
+            doc.text('Dicetak: ' + new Date().toLocaleString('id-ID'), 105, 285, { align: 'center' });
 
-            // Download
-            const fileName = `Budgeting_${project.name.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
-            doc.save(fileName);
+            doc.save(buildExportFileName(project, 'pdf'));
         }
+
+        /* =========================================================
+           INIT
+        ========================================================= */
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProjects();
+            migrateProjects();
+            saveProjects();
+            renderProjectList();
+            showView('listView');
+        });
+
+        /* Klik area gelap di luar modal = tutup modal */
+        document.addEventListener('click', function (event) {
+            if (event.target && event.target.classList && event.target.classList.contains('modal-overlay')) {
+                if (event.target.id === 'formModal') {
+                    cancelNewProject();
+                } else {
+                    event.target.classList.remove('active');
+                }
+            }
+        });
     </script>
+
 </body>
 </html>
