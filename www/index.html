@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,7 +10,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Local Libraries -->
     <script src="lib/xlsx.full.min.js"></script>
@@ -83,7 +86,11 @@
         }
 
         /* Typography */
-        h1, h2, h3, .card-title, .project-name {
+        h1,
+        h2,
+        h3,
+        .card-title,
+        .project-name {
             font-family: 'Poppins', Georgia, sans-serif;
             font-weight: 500;
         }
@@ -219,7 +226,7 @@
         .item-head,
         .item-row {
             display: grid;
-            grid-template-columns: 26px minmax(0, 2fr) minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.35fr);
+            grid-template-columns: 24px minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 0.7fr) minmax(0, 1.2fr);
             gap: 6px;
             align-items: center;
         }
@@ -275,7 +282,8 @@
         }
 
         .item-input-price,
-        .item-input-pax {
+        .item-input-pax,
+        .item-input-days {
             text-align: right;
             -moz-appearance: textfield;
         }
@@ -283,7 +291,9 @@
         .item-input-price::-webkit-outer-spin-button,
         .item-input-price::-webkit-inner-spin-button,
         .item-input-pax::-webkit-outer-spin-button,
-        .item-input-pax::-webkit-inner-spin-button {
+        .item-input-pax::-webkit-inner-spin-button,
+        .item-input-days::-webkit-outer-spin-button,
+        .item-input-days::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
@@ -884,6 +894,7 @@
                 opacity: 0;
                 transform: translateY(8px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -906,8 +917,8 @@
 
             .item-head,
             .item-row {
-                grid-template-columns: 20px minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.2fr);
-                gap: 4px;
+                grid-template-columns: 18px minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 0.6fr) minmax(0, 0.6fr) minmax(0, 1.1fr);
+                gap: 3px;
             }
 
             .item-row {
@@ -957,6 +968,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header -->
@@ -992,93 +1004,100 @@
         <div id="formModal" class="modal-overlay">
             <div class="modal">
 
-        <div class="modal-header">
-            <div class="modal-title" id="formCardTitle">Project Baru</div>
-            <button class="modal-close" onclick="cancelNewProject()">&times;</button>
-        </div>
-
-        <div class="modal-body">
-
-                <!-- 1. Nama Event -->
-                <div class="form-group">
-                    <label class="form-label" for="newProjectName">Nama Event</label>
-                    <input type="text" class="form-input" id="newProjectName" placeholder="Contoh: SMAN 77 Jakarta">
+                <div class="modal-header">
+                    <div class="modal-title" id="formCardTitle">Project Baru</div>
+                    <button class="modal-close" onclick="cancelNewProject()">&times;</button>
                 </div>
 
-                <!-- 2. Tanggal Event (bisa lebih dari satu hari) -->
-                <div class="form-group">
-                    <label class="form-label" for="newProjectDateRange">Tanggal Event</label>
-                    <div class="date-picker-trigger">
-                        <input type="text" class="form-input" id="newProjectDateRange" placeholder="Bisa milih jumlah hari" readonly onclick="openCalendar()">
-                        <button type="button" class="btn btn-secondary btn-small" onclick="toggleCalendar()">📅 Pilih</button>
+                <div class="modal-body">
+
+                    <!-- 1. Nama Event -->
+                    <div class="form-group">
+                        <label class="form-label" for="newProjectName">Nama Event</label>
+                        <input type="text" class="form-input" id="newProjectName" placeholder="Contoh: SMAN 77 Jakarta">
                     </div>
 
-                    <div id="calendarPanel" class="calendar-panel hidden">
-                        <div class="calendar-header">
-                            <button type="button" class="calendar-nav" onclick="changeCalendarMonth(-1)">‹</button>
-                            <div class="calendar-month" id="calendarMonthLabel"></div>
-                            <button type="button" class="calendar-nav" onclick="changeCalendarMonth(1)">›</button>
+                    <!-- 2. Tanggal Event (bisa lebih dari satu hari) -->
+                    <div class="form-group">
+                        <label class="form-label" for="newProjectDateRange">Tanggal Event</label>
+                        <div class="date-picker-trigger">
+                            <input type="text" class="form-input" id="newProjectDateRange"
+                                placeholder="Bisa milih jumlah hari" readonly onclick="openCalendar()">
+                            <button type="button" class="btn btn-secondary btn-small" onclick="toggleCalendar()">📅
+                                Pilih</button>
                         </div>
-                        <div class="calendar-weekdays">
-                            <div>Min</div>
-                            <div>Sen</div>
-                            <div>Sel</div>
-                            <div>Rab</div>
-                            <div>Kam</div>
-                            <div>Jum</div>
-                            <div>Sab</div>
+
+                        <div id="calendarPanel" class="calendar-panel hidden">
+                            <div class="calendar-header">
+                                <button type="button" class="calendar-nav" onclick="changeCalendarMonth(-1)">‹</button>
+                                <div class="calendar-month" id="calendarMonthLabel"></div>
+                                <button type="button" class="calendar-nav" onclick="changeCalendarMonth(1)">›</button>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div>Min</div>
+                                <div>Sen</div>
+                                <div>Sel</div>
+                                <div>Rab</div>
+                                <div>Kam</div>
+                                <div>Jum</div>
+                                <div>Sab</div>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid"></div>
+                            <div class="calendar-hint" id="calendarHint">Ketuk tanggal mulai, lalu ketuk tanggal akhir.
+                            </div>
+                            <div class="calendar-footer">
+                                <button type="button" class="btn btn-secondary btn-small"
+                                    onclick="resetEventDates()">Reset</button>
+                                <button type="button" class="btn btn-primary btn-small"
+                                    onclick="closeCalendar()">Selesai</button>
+                            </div>
                         </div>
-                        <div class="calendar-grid" id="calendarGrid"></div>
-                        <div class="calendar-hint" id="calendarHint">Ketuk tanggal mulai, lalu ketuk tanggal akhir.</div>
-                        <div class="calendar-footer">
-                            <button type="button" class="btn btn-secondary btn-small" onclick="resetEventDates()">Reset</button>
-                            <button type="button" class="btn btn-primary btn-small" onclick="closeCalendar()">Selesai</button>
+                        <div class="field-hint">Bisa lebih dari satu hari &middot; ketuk tanggal mulai, lalu tanggal
+                            akhir.</div>
+                    </div>
+
+                    <!-- 3. Tujuan (bisa lebih dari satu) -->
+                    <div class="form-group">
+                        <label class="form-label" for="newProjectDestInput">Tujuan</label>
+                        <div id="destinationWrapper" class="tag-input-wrapper">
+                            <input type="text" class="tag-input-field" id="newProjectDestInput"
+                                placeholder="Contoh: Pangandaran, Citumang, Batu Karas"
+                                onkeydown="onDestinationKeydown(event)" onblur="commitDestinationInput()">
                         </div>
                     </div>
-                    <div class="field-hint">Bisa lebih dari satu hari &middot; ketuk tanggal mulai, lalu tanggal akhir.</div>
-                </div>
 
-                <!-- 3. Tujuan (bisa lebih dari satu) -->
-                <div class="form-group">
-                    <label class="form-label" for="newProjectDestInput">Tujuan</label>
-                    <div id="destinationWrapper" class="tag-input-wrapper">
-                        <input type="text" class="tag-input-field" id="newProjectDestInput"
-                            placeholder="Contoh: Pangandaran, Citumang, Batu Karas"
-                            onkeydown="onDestinationKeydown(event)"
-                            onblur="commitDestinationInput()">
+                    <!-- 4. Berangkat dan Pulang -->
+                    <div class="form-group">
+                        <label class="form-label">Berangkat dan Pulang</label>
+                        <div class="date-range">
+                            <div class="form-group">
+                                <label class="form-label" for="newProjectStart">Berangkat</label>
+                                <input type="date" class="form-input" id="newProjectStart"
+                                    oninput="markBerangkatManual()">
+                            </div>
+                            <span class="date-range-sep">s/d</span>
+                            <div class="form-group">
+                                <label class="form-label" for="newProjectEnd">Pulang</label>
+                                <input type="date" class="form-input" id="newProjectEnd"
+                                    oninput="markBerangkatManual()">
+                            </div>
+                        </div>
                     </div>
-                    <div class="field-hint">Bisa lebih dari satu tujuan &middot; tekan koma untuk menambahkan.</div>
-                </div>
 
-                <!-- 4. Berangkat dan Pulang -->
-                <div class="form-group">
-                    <label class="form-label">Berangkat dan Pulang</label>
-                    <div class="date-range">
-                        <div class="form-group">
-                            <label class="form-label" for="newProjectStart">Berangkat</label>
-                            <input type="date" class="form-input" id="newProjectStart" oninput="markBerangkatManual()">
-                        </div>
-                        <span class="date-range-sep">s/d</span>
-                        <div class="form-group">
-                            <label class="form-label" for="newProjectEnd">Pulang</label>
-                            <input type="date" class="form-input" id="newProjectEnd" oninput="markBerangkatManual()">
-                        </div>
+                    <!-- 5. Jumlah Pax -->
+                    <div class="form-group">
+                        <label class="form-label" for="newProjectPax">Jumlah Pax</label>
+                        <input type="number" class="form-input" id="newProjectPax" placeholder="0" min="1"
+                            inputmode="numeric">
                     </div>
                 </div>
 
-                <!-- 5. Jumlah Pax -->
-                <div class="form-group">
-                    <label class="form-label" for="newProjectPax">Jumlah Pax</label>
-                    <input type="number" class="form-input" id="newProjectPax" placeholder="0" min="1" inputmode="numeric">
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cancelNewProject()">Batal</button>
+                    <button class="btn btn-primary" id="formNextBtn" onclick="goToBudgeting()">Next</button>
                 </div>
-             </div>
-             
-             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="cancelNewProject()">Batal</button>
-                <button class="btn btn-primary" id="formNextBtn" onclick="goToBudgeting()">Next</button>
             </div>
         </div>
-    </div>
 
         <!-- ================================================
              LANGKAH 2 - LAYAR BUDGETING
@@ -1089,7 +1108,8 @@
             <div class="budgeting-subtitle" id="budgetingSubtitle"></div>
 
             <div style="text-align:center; margin-bottom:12px;">
-                <button type="button" class="btn btn-secondary btn-small" onclick="editProjectInfo()">✎ Ubah Info Event</button>
+                <button type="button" class="btn btn-secondary btn-small" onclick="editProjectInfo()">✎ Ubah Info
+                    Event</button>
             </div>
 
             <div class="item-head">
@@ -1097,6 +1117,7 @@
                 <div class="item-row-header">Nama Item</div>
                 <div class="item-row-header" style="text-align:right;">Harga</div>
                 <div class="item-row-header" style="text-align:right;">Pax</div>
+                <div class="item-row-header" style="text-align:right;">Hari</div>
                 <div class="item-row-header" style="text-align:right;">Total</div>
             </div>
 
@@ -1118,11 +1139,13 @@
             <div class="manual-grid">
                 <div class="form-group manual-field">
                     <label class="form-label" for="pricePerPaxInput">Harga Per Pax</label>
-                    <input type="number" class="form-input" id="pricePerPaxInput" placeholder="0" min="0" inputmode="numeric" oninput="updatePricePerPax(this.value)">
+                    <input type="text" class="form-input" id="pricePerPaxInput" placeholder="0" inputmode="numeric"
+                        oninput="updatePricePerPax(this)">
                 </div>
                 <div class="form-group manual-field">
-                    <label class="form-label">Profit Per Pax</label>
-                    <input type="text" class="form-input input-readonly" id="profitPerPaxInput" readonly tabindex="-1">
+                    <label class="form-label" for="profitPerPaxInput">Profit Per Pax</label>
+                    <input type="text" class="form-input" id="profitPerPaxInput" placeholder="0" inputmode="numeric"
+                        oninput="updateProfitPerPax(this)">
                 </div>
             </div>
 
@@ -1266,6 +1289,22 @@
             const number = Math.round(Number(value) || 0);
             const sign = number < 0 ? '-' : '';
             return sign + 'Rp ' + Math.abs(number).toLocaleString('id-ID');
+        }
+
+        function parseRupiahInput(value) {
+            if (value === null || value === undefined) {
+                return 0;
+            }
+            const digits = String(value).replace(/[^0-9]/g, '');
+            return digits ? Number(digits) : 0;
+        }
+
+        function formatNumberInput(value) {
+            const digits = String(value).replace(/[^0-9]/g, '');
+            if (!digits) {
+                return '';
+            }
+            return Number(digits).toLocaleString('id-ID');
         }
 
         function escapeHtml(text) {
@@ -1428,6 +1467,7 @@
                     }
 
                     project.pricePerPax = parseNumber(project.pricePerPax);
+                    project.profitPerPax = parseNumber(project.profitPerPax);
                     delete project.projectPricePerPax;
 
                     project.destinations = Array.isArray(project.destinations)
@@ -1491,14 +1531,15 @@
                     parseNumber(item.price),
                     parseNumber(item.pax !== undefined ? item.pax : item.qty),
                     usedIds,
-                    item.id
+                    item.id,
+                    item.days === undefined ? 1 : parseNumber(item.days)
                 ));
             });
 
             return result;
         }
 
-        function createItemRecord(name, price, pax, usedIds, preferredId) {
+        function createItemRecord(name, price, pax, usedIds, preferredId, days) {
             let id = preferredId ? String(preferredId).replace(/[^a-zA-Z0-9_-]/g, '') : '';
 
             if (!id || (usedIds && usedIds[id])) {
@@ -1513,14 +1554,15 @@
                 id: id,
                 name: String(name === null || name === undefined ? '' : name),
                 price: price,
-                pax: pax
+                pax: pax,
+                days: days === undefined ? 1 : days
             };
         }
 
         /* Daftar item default untuk project baru */
         function createDefaultItems() {
             return DEFAULT_ITEM_NAMES.map(function (name) {
-                return createItemRecord(name, 0, 0, null);
+                return createItemRecord(name, 0, 0, null, null, 1);
             });
         }
 
@@ -1532,7 +1574,8 @@
             if (!item) {
                 return 0;
             }
-            return parseNumber(item.price) * parseNumber(item.pax);
+            const days = item.days === undefined ? 1 : parseNumber(item.days);
+            return parseNumber(item.price) * parseNumber(item.pax) * days;
         }
 
         function getTotalExpenses(project) {
@@ -1616,33 +1659,33 @@
 
                 return '' +
                     '<div class="project-card fade-in" onclick="openProjectToBudgeting(\'' + project.id + '\')">' +
-                        '<div class="project-card-head">' +
-                            '<div class="project-name">' + escapeHtml(project.name) + '</div>' +
-                            '<button type="button" class="project-delete" title="Hapus project" ' +
-                                'onclick="event.stopPropagation(); deleteProject(\'' + project.id + '\')">🗑</button>' +
-                        '</div>' +
-                        (dateLabel
-                            ? '<div class="project-date">📅 ' + escapeHtml(dateLabel) + '</div>'
-                            : '') +
-                        (destinations
-                            ? '<div class="project-dest">📍 ' + escapeHtml(destinations) + '</div>'
-                            : '') +
-                        '<div class="project-stats">' +
-                            '<div class="project-stat">' +
-                                '<div class="project-stat-label">Pax</div>' +
-                                '<div class="project-stat-value mono">' + parseNumber(project.pax) + '</div>' +
-                            '</div>' +
-                            '<div class="project-stat">' +
-                                '<div class="project-stat-label">Harga/Pax</div>' +
-                                '<div class="project-stat-value mono">' + formatRupiah(project.pricePerPax) + '</div>' +
-                            '</div>' +
-                            '<div class="project-stat">' +
-                                '<div class="project-stat-label">Profit</div>' +
-                                '<div class="project-stat-value mono ' + balanceClass + '">' +
-                                    balanceSign + formatRupiah(balance) +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
+                    '<div class="project-card-head">' +
+                    '<div class="project-name">' + escapeHtml(project.name) + '</div>' +
+                    '<button type="button" class="project-delete" title="Hapus project" ' +
+                    'onclick="event.stopPropagation(); deleteProject(\'' + project.id + '\')">🗑</button>' +
+                    '</div>' +
+                    (dateLabel
+                        ? '<div class="project-date">📅 ' + escapeHtml(dateLabel) + '</div>'
+                        : '') +
+                    (destinations
+                        ? '<div class="project-dest">📍 ' + escapeHtml(destinations) + '</div>'
+                        : '') +
+                    '<div class="project-stats">' +
+                    '<div class="project-stat">' +
+                    '<div class="project-stat-label">Pax</div>' +
+                    '<div class="project-stat-value mono">' + parseNumber(project.pax) + '</div>' +
+                    '</div>' +
+                    '<div class="project-stat">' +
+                    '<div class="project-stat-label">Harga/Pax</div>' +
+                    '<div class="project-stat-value mono">' + formatRupiah(project.pricePerPax) + '</div>' +
+                    '</div>' +
+                    '<div class="project-stat">' +
+                    '<div class="project-stat-label">Profit</div>' +
+                    '<div class="project-stat-value mono ' + balanceClass + '">' +
+                    balanceSign + formatRupiah(balance) +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
                     '</div>';
             }).join('');
         }
@@ -1699,7 +1742,7 @@
 
         function setFormButtonLabel(label) {
             const button = document.getElementById('formNextBtn');
-            
+
             if (button) {
                 button.textContent = label;
             }
@@ -1724,23 +1767,23 @@
             updateEventDateDisplay();
         }
         function cancelNewProject() {
-        /* Saat sedang mengubah info project yang sudah ada,
-         tombol Batal cuma menutup modal, layar Budgeting
-         di belakangnya tetap seperti semula. */
-         if (editingExisting && draftProject) {
+            /* Saat sedang mengubah info project yang sudah ada,
+             tombol Batal cuma menutup modal, layar Budgeting
+             di belakangnya tetap seperti semula. */
+            if (editingExisting && draftProject) {
+                closeModal('formModal');
+                return;
+            }
+            resetNewProjectForm();
+            draftProject = null;
+            draftIsNew = false;
+            editingExisting = false;
+            currentProjectId = null;
+
+            renderProjectList();
             closeModal('formModal');
-            return;
         }
-        resetNewProjectForm();
-        draftProject = null;
-        draftIsNew = false;
-        editingExisting = false;
-        currentProjectId = null;
-        
-        renderProjectList();
-        closeModal('formModal');
-    }
-        
+
 
         /* ---------------- Tujuan (bisa lebih dari satu) ---------------- */
 
@@ -2014,6 +2057,7 @@
                 endDate: document.getElementById('newProjectEnd').value || '',
                 pax: pax,
                 pricePerPax: isEditingExisting ? parseNumber(draftProject.pricePerPax) : 0,
+                profitPerPax: isEditingExisting ? parseNumber(draftProject.profitPerPax) : 0,
                 items: isEditingExisting ? draftProject.items : createDefaultItems(),
                 createdAt: isEditingExisting && draftProject.createdAt
                     ? draftProject.createdAt
@@ -2107,7 +2151,8 @@
                 ? draftProject.name + ' to ' + destinations
                 : draftProject.name;
 
-            document.getElementById('pricePerPaxInput').value = parseNumber(draftProject.pricePerPax) || '';
+            document.getElementById('pricePerPaxInput').value = formatNumberInput(draftProject.pricePerPax) || '';
+            document.getElementById('profitPerPaxInput').value = formatNumberInput(draftProject.profitPerPax) || '';
 
             renderItemsTable();
             updateSummary();
@@ -2151,29 +2196,32 @@
 
             return '' +
                 '<div class="item-row">' +
-                    '<div class="item-no">' + (index + 1) + '</div>' +
-                    '<input type="text" class="item-input item-input-name" data-item-id="' + id + '" ' +
-                        'placeholder="Nama item" value="' + escapeHtml(item.name || '') + '" ' +
-                        'oninput="updateItemName(\'' + id + '\', this.value)">' +
-                    '<input type="number" class="item-input item-input-price" min="0" inputmode="numeric" ' +
-                        'placeholder="0" value="' + (parseNumber(item.price) || '') + '" ' +
-                        'oninput="updateItemPrice(\'' + id + '\', this.value)">' +
-                    '<input type="number" class="item-input item-input-pax" min="0" inputmode="numeric" ' +
-                        'placeholder="0" value="' + (parseNumber(item.pax) || '') + '" ' +
-                        'oninput="updateItemPax(\'' + id + '\', this.value)">' +
-                    '<div class="item-total-cell mono" id="itemTotal-' + id + '">' +
-                        formatRupiah(getItemTotal(item)) +
-                    '</div>' +
+                '<div class="item-no">' + (index + 1) + '</div>' +
+                '<input type="text" class="item-input item-input-name" data-item-id="' + id + '" ' +
+                'placeholder="Nama item" value="' + escapeHtml(item.name || '') + '" ' +
+                'oninput="updateItemName(\'' + id + '\', this.value)">' +
+                '<input type="text" class="item-input item-input-price" inputmode="numeric" ' +
+                'placeholder="0" value="' + (formatNumberInput(item.price) || '') + '" ' +
+                'oninput="updateItemPrice(\'' + id + '\', this)">' +
+                '<input type="number" class="item-input item-input-pax" min="0" inputmode="numeric" ' +
+                'placeholder="0" value="' + (parseNumber(item.pax) || '') + '" ' +
+                'oninput="updateItemPax(\'' + id + '\', this.value)">' +
+                '<input type="number" class="item-input item-input-days" min="0" inputmode="numeric" ' +
+                'placeholder="1" value="' + (parseNumber(item.days) || '') + '" ' +
+                'oninput="updateItemDays(\'' + id + '\', this.value)">' +
+                '<div class="item-total-cell mono" id="itemTotal-' + id + '">' +
+                formatRupiah(getItemTotal(item)) +
+                '</div>' +
                 '</div>';
         }
 
         function buildTotalRow() {
             return '' +
                 '<div class="item-row total-row">' +
-                    '<div class="total-row-label">Total Pengeluaran</div>' +
-                    '<div class="total-row-value mono" id="totalExpensesValue">' +
-                        formatRupiah(getTotalExpenses(draftProject)) +
-                    '</div>' +
+                '<div class="total-row-label">Total Pengeluaran</div>' +
+                '<div class="total-row-value mono" id="totalExpensesValue">' +
+                formatRupiah(getTotalExpenses(draftProject)) +
+                '</div>' +
                 '</div>';
         }
 
@@ -2197,14 +2245,17 @@
             }
         }
 
-        function updateItemPrice(itemId, value) {
+        function updateItemPrice(itemId, inputEl) {
             const item = findDraftItem(itemId);
 
             if (!item) {
                 return;
             }
 
-            item.price = parseNumber(value);
+            const raw = parseRupiahInput(inputEl.value);
+            inputEl.value = formatNumberInput(inputEl.value);
+
+            item.price = raw;
             refreshItemTotal(item);
             updateSummary();
         }
@@ -2217,6 +2268,18 @@
             }
 
             item.pax = parseNumber(value);
+            refreshItemTotal(item);
+            updateSummary();
+        }
+
+        function updateItemDays(itemId, value) {
+            const item = findDraftItem(itemId);
+
+            if (!item) {
+                return;
+            }
+
+            item.days = parseNumber(value);
             refreshItemTotal(item);
             updateSummary();
         }
@@ -2235,7 +2298,7 @@
                 return;
             }
 
-            const item = createItemRecord('', 0, 0, null);
+            const item = createItemRecord('', 0, 0, null, null, 1);
             draftProject.items.push(item);
 
             renderItemsTable(item.id);
@@ -2271,11 +2334,11 @@
 
                 return '' +
                     '<label class="delete-item-option' + (selected ? ' selected' : '') + '">' +
-                        '<input type="checkbox" ' + (selected ? 'checked' : '') + ' ' +
-                            'onchange="toggleDeleteItem(\'' + item.id + '\', this.checked)">' +
-                        '<span class="item-name-text">' + (index + 1) + '. ' +
-                            escapeHtml(item.name || '(tanpa nama)') + '</span>' +
-                        '<span class="item-price-text mono">' + formatRupiah(getItemTotal(item)) + '</span>' +
+                    '<input type="checkbox" ' + (selected ? 'checked' : '') + ' ' +
+                    'onchange="toggleDeleteItem(\'' + item.id + '\', this.checked)">' +
+                    '<span class="item-name-text">' + (index + 1) + '. ' +
+                    escapeHtml(item.name || '(tanpa nama)') + '</span>' +
+                    '<span class="item-price-text mono">' + formatRupiah(getItemTotal(item)) + '</span>' +
                     '</label>';
             }).join('');
         }
@@ -2324,13 +2387,27 @@
         ========================================================= */
 
         /* Harga Per Pax diisi manual oleh user */
-        function updatePricePerPax(value) {
+        function updatePricePerPax(inputEl) {
             if (!draftProject) {
                 return;
             }
 
-            draftProject.pricePerPax = parseNumber(value);
+            const raw = parseRupiahInput(inputEl.value);
+            inputEl.value = formatNumberInput(inputEl.value);
+
+            draftProject.pricePerPax = raw;
             updateSummary();
+        }
+
+        function updateProfitPerPax(inputEl) {
+            if (!draftProject) {
+                return;
+            }
+
+            const raw = parseRupiahInput(inputEl.value);
+            inputEl.value = formatNumberInput(inputEl.value);
+
+            draftProject.profitPerPax = raw;
         }
 
         function updateSummary() {
@@ -2343,9 +2420,6 @@
             if (totalExpensesElement) {
                 totalExpensesElement.textContent = formatRupiah(getTotalExpenses(draftProject));
             }
-
-            /* Profit Per Pax = Harga Per Pax - (Total Pengeluaran / Jumlah Pax) */
-            document.getElementById('profitPerPaxInput').value = formatRupiah(getProfitPerPax(draftProject));
 
             /* Balance Due = (Harga Per Pax x Jumlah Pax) - Total Pengeluaran */
             const balance = getBalanceDue(draftProject);
@@ -2493,7 +2567,7 @@
 
             const items = Array.isArray(project.items) ? project.items : [];
             const totalExpenses = getTotalExpenses(project);
-            const profitPerPax = getProfitPerPax(project);
+            const profitPerPax = parseNumber(project.profitPerPax);
             const balance = getBalanceDue(project);
             const dateLabel = getProjectDateLabel(project);
             const destinations = (project.destinations || []).join(', ');
@@ -2520,7 +2594,7 @@
 
             rows.push(['Jumlah Pax', parseNumber(project.pax)]);
             rows.push([]);
-            rows.push(['No', 'Uraian', 'Harga', 'Pax', 'Total']);
+            rows.push(['No', 'Uraian', 'Harga', 'Pax', 'Hari', 'Total']);
 
             items.forEach(function (item, index) {
                 rows.push([
@@ -2528,6 +2602,7 @@
                     item.name || '',
                     parseNumber(item.price),
                     parseNumber(item.pax),
+                    item.days === undefined ? 1 : parseNumber(item.days),
                     getItemTotal(item)
                 ]);
             });
@@ -2551,9 +2626,9 @@
                 { wch: 35 },
                 { wch: 16 },
                 { wch: 8 },
+                { wch: 8 },
                 { wch: 18 }
             ];
-
             const workbook = XLSX.utils.book_new();
 
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Budgeting');
@@ -2583,7 +2658,7 @@
 
             const items = Array.isArray(project.items) ? project.items : [];
             const totalExpenses = getTotalExpenses(project);
-            const profitPerPax = getProfitPerPax(project);
+            const profitPerPax = parseNumber(project.profitPerPax);
             const balance = getBalanceDue(project);
             const dateLabel = getProjectDateLabel(project);
             const destinations = (project.destinations || []).join(', ');
@@ -2627,15 +2702,16 @@
                     item.name || '',
                     formatRupiah(item.price),
                     parseNumber(item.pax),
+                    item.days === undefined ? 1 : parseNumber(item.days),
                     formatRupiah(getItemTotal(item))
                 ];
             });
 
             doc.autoTable({
                 startY: infoY + 8,
-                head: [['No', 'Uraian', 'Harga', 'Pax', 'Total']],
+                head: [['No', 'Uraian', 'Harga', 'Pax', 'Hari', 'Total']],
                 body: tableData,
-                foot: [['', 'Total Pengeluaran', '', '', formatRupiah(totalExpenses)]],
+                foot: [['', 'Total Pengeluaran', '', '', '', formatRupiah(totalExpenses)]],
                 theme: 'grid',
                 headStyles: {
                     fillColor: [239, 224, 201],
@@ -2652,62 +2728,64 @@
                     cellPadding: 4
                 },
                 columnStyles: {
-                    0: { cellWidth: 12, halign: 'center' },
-                    1: { cellWidth: 70 },
-                    2: { cellWidth: 32, halign: 'right' },
-                    3: { cellWidth: 18, halign: 'center' },
-                    4: { cellWidth: 38, halign: 'right' }
+                    0: { cellWidth: 10, halign: 'center' },
+                    1: { cellWidth: 62 },
+                    2: { cellWidth: 28, halign: 'right' },
+                    3: { cellWidth: 14, halign: 'center' },
+                    4: { cellWidth: 14, halign: 'center' },
+                    5: { cellWidth: 34, halign: 'right' }
                 }
             });
 
             const finalY = doc.lastAutoTable.finalY + 10;
 
-            doc.setFontSize(11);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Ringkasan:', 14, finalY);
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Ringkasan:', 14, finalY);
 
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(10);
-            doc.text('Harga Per Pax: ' + formatRupiah(project.pricePerPax), 14, finalY + 8);
-            doc.text('Profit Per Pax: ' + formatRupiah(profitPerPax), 14, finalY + 16);
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                doc.text('Harga Per Pax: ' + formatRupiah(project.pricePerPax), 14, finalY + 8);
+                doc.text('Profit Per Pax: ' + formatRupiah(profitPerPax), 14, finalY + 16);
 
-            doc.setFont('helvetica', 'bold');
-            doc.text(
-                (balance >= 0 ? 'Profit: +' : 'Minus: ') + formatRupiah(balance),
-                14,
-                finalY + 24
-            );
+                doc.setFont('helvetica', 'bold');
+                doc.text(
+                    (balance >= 0 ? 'Profit: +' : 'Minus: ') + formatRupiah(balance),
+                    14,
+                    finalY + 24
+                );
 
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(8);
-            doc.text('Dicetak: ' + new Date().toLocaleString('id-ID'), 105, 285, { align: 'center' });
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(8);
+                doc.text('Dicetak: ' + new Date().toLocaleString('id-ID'), 105, 285, { align: 'center' });
 
-            doc.save(buildExportFileName(project, 'pdf'));
-        }
+                doc.save(buildExportFileName(project, 'pdf'));
+            }
 
         /* =========================================================
            INIT
         ========================================================= */
 
         document.addEventListener('DOMContentLoaded', function () {
-            loadProjects();
-            migrateProjects();
-            saveProjects();
-            renderProjectList();
-            showView('listView');
-        });
+                loadProjects();
+                migrateProjects();
+                saveProjects();
+                renderProjectList();
+                showView('listView');
+            });
 
-        /* Klik area gelap di luar modal = tutup modal */
-        document.addEventListener('click', function (event) {
-            if (event.target && event.target.classList && event.target.classList.contains('modal-overlay')) {
-                if (event.target.id === 'formModal') {
-                    cancelNewProject();
-                } else {
-                    event.target.classList.remove('active');
+            /* Klik area gelap di luar modal = tutup modal */
+            document.addEventListener('click', function (event) {
+                if (event.target && event.target.classList && event.target.classList.contains('modal-overlay')) {
+                    if (event.target.id === 'formModal') {
+                        cancelNewProject();
+                    } else {
+                        event.target.classList.remove('active');
+                    }
                 }
-            }
-        });
+            });
     </script>
 
 </body>
+
 </html>
