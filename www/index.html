@@ -325,10 +325,15 @@
         }
 
         /* Manual section */
-        .manual-grid {
+        .profit-row-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: 1.3fr 0.8fr 1.3fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .profit-row-grid .form-label {
+            font-size: 0.75rem;
         }
 
         .manual-field {
@@ -1136,16 +1141,27 @@
 
             <div class="section-title">Pengaturan Harga</div>
 
-            <div class="manual-grid">
-                <div class="form-group manual-field">
-                    <label class="form-label" for="pricePerPaxInput">Harga Per Pax</label>
-                    <input type="text" class="form-input" id="pricePerPaxInput" placeholder="0" inputmode="numeric"
-                        oninput="updatePricePerPax(this)">
-                </div>
+            <div class="form-group manual-field">
+                <label class="form-label" for="pricePerPaxInput">Harga Per Pax</label>
+                <input type="text" class="form-input" id="pricePerPaxInput" placeholder="0" inputmode="numeric"
+                    oninput="updatePricePerPax(this)">
+            </div>
+
+            <div class="profit-row-grid">
                 <div class="form-group manual-field">
                     <label class="form-label" for="profitPerPaxInput">Profit Per Pax</label>
                     <input type="text" class="form-input" id="profitPerPaxInput" placeholder="0" inputmode="numeric"
                         oninput="updateProfitPerPax(this)">
+                </div>
+                <div class="form-group manual-field">
+                    <label class="form-label">Jumlah Pax</label>
+                    <input type="text" class="form-input input-readonly mono" id="profitPaxDisplay" readonly
+                        tabindex="-1">
+                </div>
+                <div class="form-group manual-field">
+                    <label class="form-label">Total</label>
+                    <input type="text" class="form-input input-readonly mono" id="profitTotalDisplay" readonly
+                        tabindex="-1">
                 </div>
             </div>
 
@@ -2416,10 +2432,15 @@
                 return;
             }
 
-            const totalExpensesElement = document.getElementById('totalExpensesValue');
+            const paxDisplayElement = document.getElementById('profitPaxDisplay');
+            const totalDisplayElement = document.getElementById('profitTotalDisplay');
 
-            if (totalExpensesElement) {
-                totalExpensesElement.textContent = formatRupiah(getTotalExpenses(draftProject));
+            if (paxDisplayElement) {
+                paxDisplayElement.value = parseNumber(draftProject.pax);
+            }
+
+            if (totalDisplayElement) {
+                totalDisplayElement.value = formatRupiah(getBalanceDue(draftProject));
             }
 
             /* Balance Due = (Harga Per Pax x Jumlah Pax) - Total Pengeluaran */
